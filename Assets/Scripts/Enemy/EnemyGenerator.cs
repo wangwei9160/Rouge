@@ -1,15 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 
 public class EnemyGenerator : MonoBehaviour
 {
+    public GameManager gameManager;
     public GameObject monster;
 
     private float mCurrentSecond = 0;
     private int waveCount = 0;
+    private bool isSet = false;
 
     private int[,] Mons = new int[,]
     {
@@ -24,55 +27,75 @@ public class EnemyGenerator : MonoBehaviour
 
     private List<GameObject> monsterController = new List<GameObject>();
 
-    // Start is called before the first frame update
+    private void Awake()
+    {
+        init();
+    }
+
     void Start()
     {
-        
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        init();
+    }
+
+    private void init()
+    {
+        mCurrentSecond = 0;
+        waveCount = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        mCurrentSecond += Time.deltaTime;
-
-        if(mCurrentSecond > 1 )
+        if(gameManager.Instance.state == StateID.FightState)
         {
-            mCurrentSecond = 0;
+            mCurrentSecond += Time.deltaTime;
 
-            if(waveCount <= 6 )
+            if (mCurrentSecond > 1)
             {
-                for (int i = 0; i < 7; i++)
+                mCurrentSecond = 0;
+
+                if (waveCount <= 6)
                 {
-                    if(Mons[waveCount , i] == 1)
+                    for (int i = 0; i < 7; i++)
                     {
-                        GameObject tmp = GameObject.Instantiate(monster, gameObject.transform);
-                        tmp.transform.position = new Vector3(9 - i * 3, 0, -15);
-                        monsterController.Add(tmp);
+                        if (Mons[waveCount, i] == 1)
+                        {
+                            GameObject tmp = GameObject.Instantiate(monster, gameObject.transform);
+                            tmp.transform.position = new Vector3(9 - i * 3, 0, -15);
+                            monsterController.Add(tmp);
+                        }
+
                     }
-                    
+
+                    waveCount = waveCount + 1;
                 }
-
-                waveCount = waveCount + 1;
             }
-        }
 
-        List<GameObject> toRemove = new List<GameObject>();
+            List<GameObject> toRemove = new List<GameObject>();
 
-        foreach (var item in monsterController)
-        {
-            MonsterController tmp = item.GetComponent<MonsterController>();
-            if(tmp.Status == 5)
+            foreach (var item in monsterController)
             {
-                StartCoroutine(DieAction(item));
-                tmp.ChangeStatus(6);
-                toRemove.Add(item);
+                MonsterController tmp = item.GetComponent<MonsterController>();
+                if (tmp.Status == 5)
+                {
+                    StartCoroutine(DieAction(item));
+                    tmp.ChangeStatus(6);
+                    toRemove.Add(item);
+                }
+            }
+
+            foreach (var item in toRemove)
+            {
+                monsterController.Remove(item);
             }
         }
-
-        foreach (var item in toRemove)
+        else
         {
-            monsterController.Remove(item);
+            init();
         }
+
+        
     }
 
 

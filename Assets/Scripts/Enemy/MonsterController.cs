@@ -51,10 +51,6 @@ public class MonsterController : MonoBehaviour
 
     void Update()
     {
-        if(GameContext.isGameOver)
-        {
-            return;
-        }
         StatusChange();
         Move();
     }

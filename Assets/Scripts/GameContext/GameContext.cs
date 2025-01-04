@@ -23,7 +23,9 @@ public class EnemyNumber
 
 public static class GameContext
 {
+
     public static bool isGameOver = false;      // 游戏结束标志
+    public static bool isLevelFinish = false;   // 当前关卡通关
     public static bool isAward = false;         // 通关奖励
 
     public static int CurrentLevel = 1;         // 当前关卡信息

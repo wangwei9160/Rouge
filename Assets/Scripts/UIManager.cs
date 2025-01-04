@@ -7,12 +7,11 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 
-
-
 public class UIManager : MonoBehaviour
 {
-    public TMP_Text CurrentLevel;
-    public TMP_Text EnemyTotal;
+    public GameManager gameManager;
+    public Text mCurrentLevel;
+    public Text EnemyCount;
 
     private Action EnemyNumberUpdate;
     private Action GameOverUI;
@@ -23,13 +22,12 @@ public class UIManager : MonoBehaviour
 
     private Dictionary<string, int> WeaponDamage = new Dictionary<string, int>();
 
-    // 通关奖励
-    public GameObject AwardUI;
+    // 商店UI
+    public GameObject ShopUI;
 
     void Awake()
     {
         Myinit();
-        
     }
 
     void Start()
@@ -44,26 +42,28 @@ public class UIManager : MonoBehaviour
 
     public void Myinit()
     {
-        GameContext.isGameOver = false;
-        CurrentLevel.text = "第 " + GameContext.CurrentLevel + " 关";
-        AwardUI.SetActive(false);
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();   
+        
+        ShopUI.SetActive(false);
     }
 
     void Update()
     {
-        if (GameContext.isGameOver)
+        if (gameManager.Instance.state == StateID.ShopState)
         {
-            AwardUI.SetActive(true);
+            ShopUI.SetActive(true);
             return;
+        }
+        if(gameManager.Instance.state == StateID.FightState)
+        {
+            UpdateCurrentLevel();
+            ShopUI.SetActive(false);
         }
         if (EnemyNumberUpdate != null)
         {
             EnemyNumberUpdate();
         }
-
     }
-
-    
 
     // 更新武器伤害
     public void UpdateWeaponDamage(string name, int value)
@@ -82,6 +82,11 @@ public class UIManager : MonoBehaviour
         return WeaponDamage;
     }
 
+    public void UpdateCurrentLevel()
+    {
+        mCurrentLevel.text = "第 " + GameContext.CurrentLevel + " 关";
+    }
+
     // 更新敌人数量
     public void UpdateEnemyNumber(int num)
     {
@@ -91,7 +96,7 @@ public class UIManager : MonoBehaviour
 
     private void UpdateEnemy()
     {
-        EnemyTotal.text = GameContext.number.res.ToString() + " / " + GameContext.number.total.ToString();
+        EnemyCount.text = GameContext.number.res.ToString() + " / " + GameContext.number.total.ToString();
     }
 
 }
