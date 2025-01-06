@@ -1,0 +1,10 @@
+// ÎäÆ÷Ï¡ÓÐ¶È
+
+public enum WeaponType
+{
+    Unknown = 0,
+    Common,
+    Rare,
+    Epic,
+    legendary
+}

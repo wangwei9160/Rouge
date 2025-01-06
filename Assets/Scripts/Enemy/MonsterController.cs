@@ -38,7 +38,7 @@ public class MonsterController : MonoBehaviour
     private Animator animator;
     private string currentAnimation = "";
 
-    private float healthValue = 35f;
+    private float healthValue = 19f;
     // Start is called before the first frame update
     void Start()
     {
@@ -105,9 +105,14 @@ public class MonsterController : MonoBehaviour
         healthValue -= 1f * Time.deltaTime;
     }
 
-    public void Damge(float damge)
+    public bool Damge(float damge)
     {
+        if(healthValue < 0f)
+        {
+            return false;
+        }
         healthValue -= damge ;
+        return true;
     }
 
 

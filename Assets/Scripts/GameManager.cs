@@ -62,5 +62,4 @@ public class GameManager : MonoBehaviour
         return enemyGenerator.GetEnemy();
     }
 
-
 }

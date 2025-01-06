@@ -10,10 +10,11 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     public GameManager gameManager;
-    public Text mCurrentLevel;
-    public Text EnemyCount;
+    // 关卡UI
+    public Text mCurrentLevel;      // 当前波次
+    public Text EnemyCount;         // 敌人计数
 
-    private Action EnemyNumberUpdate;
+    private Action EnemyNumberUpdate;   
     private Action GameOverUI;
 
     // 武器伤害相关UI
@@ -52,12 +53,16 @@ public class UIManager : MonoBehaviour
         if (gameManager.Instance.state == StateID.ShopState)
         {
             ShopUI.SetActive(true);
+            mCurrentLevel.gameObject.SetActive(false);
+            EnemyCount.gameObject.SetActive(false);
             return;
         }
         if(gameManager.Instance.state == StateID.FightState)
         {
             UpdateCurrentLevel();
             ShopUI.SetActive(false);
+            mCurrentLevel.gameObject.SetActive(true);
+            EnemyCount.gameObject.SetActive(true);
         }
         if (EnemyNumberUpdate != null)
         {
