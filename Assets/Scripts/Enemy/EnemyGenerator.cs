@@ -5,14 +5,13 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 
 
-public class EnemyGenerator : MonoBehaviour
+public class EnemyGenerator : ManagerBase<EnemyGenerator>
 {
-    public GameManager gameManager;
+
     public GameObject monster;
 
     private float mCurrentSecond = 0;
     private int waveCount = 0;
-    private bool isSet = false;
 
     private int[,] Mons = new int[,]
     {
@@ -27,14 +26,8 @@ public class EnemyGenerator : MonoBehaviour
 
     private List<GameObject> monsterController = new List<GameObject>();
 
-    private void Awake()
-    {
-        init();
-    }
-
     void Start()
     {
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         init();
     }
 
@@ -47,7 +40,7 @@ public class EnemyGenerator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(gameManager.Instance.state == StateID.FightState)
+        if(GameManager.Instance.state == StateID.FightState)
         {
             mCurrentSecond += Time.deltaTime;
 
@@ -98,7 +91,7 @@ public class EnemyGenerator : MonoBehaviour
         
     }
 
-
+    // 获得最前方的敌人
     public GameObject GetEnemy()
     {
         if(monsterController.Count == 0)

@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class ShopPanel : MonoBehaviour 
 {
-    public GameManager gameManager;
     // �̵갴ť
     public Button GoButton;
 
@@ -17,11 +16,11 @@ public class ShopPanel : MonoBehaviour
 
     void Awake()
     {
+        RefreshAllShopItem();
     }
 
     void Start()
     {
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         GoButton.onClick.AddListener(nextLevel);
     }
 
@@ -30,11 +29,23 @@ public class ShopPanel : MonoBehaviour
     {
         GameContext.CurrentLevel += 1;
         GameContext.number.res = 0;
-        gameManager.Instance.TransState(StateID.FightState);
+        GameManager.Instance.TransState(StateID.FightState);
     }
 
     void Update()
     {
+    }
+
+    public void RefreshAllShopItem()
+    {
+        for(int i = 0; i < 4; i++)
+        {
+            GameObject go = ScrollViewContent.transform.GetChild(i).gameObject;
+            GameObject item = go.transform.GetChild(0).gameObject; 
+            ItemTplInfo info = TplUtil.GetItemTplDic()[1];
+            go.name = string.Format("item-{0}-{1}", info.ID, info.Name);
+            item.GetComponent<BuyItemScript>().ResetItem(info);
+        }
     }
 
     //private void ClearAndAddElements()

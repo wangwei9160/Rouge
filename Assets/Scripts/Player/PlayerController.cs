@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public GameManager gameManager;
     public GameObject Ball;         // ×Óµ¯Ô¤ÖÆÌå
 
     public Weapon Weapon;
@@ -14,8 +13,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        Weapon = gameManager.Instance.weaponManager.getWeapon(1);
+        Weapon = WeaponManager.Instance.getWeapon(1);
     }
 
     // Update is called once per frame
@@ -26,7 +24,7 @@ public class PlayerController : MonoBehaviour
         if(mCurrentSecond > Weapon.colddown)
         {
             mCurrentSecond = 0;
-            GameObject enemy = gameManager.GetEnemyOne();
+            GameObject enemy = EnemyGenerator.Instance.GetEnemy();
             if (enemy != null)
             {
                 GameObject ball = GameObject.Instantiate(Ball);

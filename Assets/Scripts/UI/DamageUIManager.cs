@@ -29,30 +29,12 @@ public class ShowDamageAction
     public DamageData data;
 }
 
-public class DamageUIManager : MonoBehaviour 
+public class DamageUIManager : ManagerBase<DamageUIManager> 
 {
-    private DamageUIManager instance;
-
-    public DamageUIManager Instance
-    {
-        get { return instance; }
-        private set { instance = value; }
-    }
 
     public GameObject damgeUI;
     // 用于显示伤害的事件
     public Queue<ShowDamageAction> dataQueue = new Queue<ShowDamageAction>();
-
-
-    void Awake()
-    {
-    }
-
-    void Start()
-    {
-        instance = this;
-        
-    }
 
     void Update()
     {

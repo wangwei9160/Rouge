@@ -10,7 +10,7 @@ public class BuyItemScript : MonoBehaviour
     public Image ItemIcon;              // 图标
     public TMP_Text ItemType;           // 商品类型
     public TMP_Text ItemName;           // 商品名
-    public TMP_Text ItemDescription;    // 商品描述
+    public Text ItemDescription;    // 商品描述
     public TMP_Text ItemLimit;          // 商品购买限制
     public Button buyButton;            // 购买按钮
     public TMP_Text ItemGold;           // 商品价格
@@ -41,6 +41,13 @@ public class BuyItemScript : MonoBehaviour
                 LockText.text = "锁定";
             }
         });
+    }
+
+    public void ResetItem(ItemTplInfo item)
+    {
+        ItemName.text = item.Name;
+        ItemDescription.text = item.Description;
+        ItemGold.text = item.Price.ToString();
     }
 
 }

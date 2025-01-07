@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class MonsterController : MonoBehaviour
 {
-    public GameManager gameManager;
     public GameObject monster;
     public GameObject player;
 
@@ -30,7 +29,7 @@ public class MonsterController : MonoBehaviour
         if(value == 6)
         {
             ChangeAnimation("Death");
-            gameManager.Instance.uiInfoManager.UpdateEnemyNumber(1);
+            UIManager.Instance.UpdateEnemyNumber(1);
         }
     }
 
@@ -42,7 +41,6 @@ public class MonsterController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         monster = gameObject;
         animator = GetComponent<Animator>();
         //monster.transform.position = new Vector3(9, 0, -15);

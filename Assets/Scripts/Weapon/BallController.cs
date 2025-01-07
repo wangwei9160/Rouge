@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class BallController : BaseWeapon
 {
-    public GameManager gameManager;
     public Vector3 dir;
 
     public Weapon weapon;
@@ -14,9 +13,8 @@ public class BallController : BaseWeapon
 
     protected override void Start()
     {
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         Destroy(gameObject , 5);
-        weapon = gameManager.Instance.weaponManager.getWeapon(1);
+        weapon = WeaponManager.Instance.getWeapon(1);
     }
 
     protected override void Update()
@@ -51,8 +49,8 @@ public class BallController : BaseWeapon
             isAlive = false;
             
             Destroy(gameObject);
-            gameManager.Instance.damageUIManager.ShowDamgeText(other.gameObject.transform, weapon.damage);
-            gameManager.Instance.uiInfoManager.UpdateWeaponDamage("Ball", weapon.damage);
+            DamageUIManager.Instance.ShowDamgeText(other.gameObject.transform, weapon.damage);
+            UIManager.Instance.UpdateWeaponDamage("Ball", weapon.damage);
         }
     }
 

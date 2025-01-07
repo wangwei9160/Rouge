@@ -7,7 +7,6 @@ using UnityEngine.UI;
 
 public class AwardInfo : MonoBehaviour 
 {
-    public GameManager gameManager;
     public Button selectButton;
     public Image image;
     public TMP_Text info;
@@ -33,7 +32,6 @@ public class AwardInfo : MonoBehaviour
 
     public void Myinit()
     {
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         if(selectButton != null )
         {
             selectButton.onClick.RemoveAllListeners();
@@ -43,7 +41,7 @@ public class AwardInfo : MonoBehaviour
 
     public void SetAward(int type , int updType)
     {
-        weapon = gameManager.Instance.weaponManager.getWeapon(type);
+        weapon = WeaponManager.Instance.getWeapon(type);
         updateType = updType;   
         info.text = weapon.name + message[updType];
     }
@@ -63,7 +61,7 @@ public class AwardInfo : MonoBehaviour
         {
             weapon.moveSpeed += 1f;
         }
-        gameManager.Instance.weaponManager.resetWeapon(weapon.type, weapon.damage, weapon.colddown, weapon.moveSpeed);
+        WeaponManager.Instance.resetWeapon(weapon.type, weapon.damage, weapon.colddown, weapon.moveSpeed);
         SceneManager.LoadScene("StoreScene");
     }
 

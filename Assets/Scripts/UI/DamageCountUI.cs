@@ -49,9 +49,9 @@ public class DamageCountUI : MonoBehaviour
         {
             Destroy(item.gameObject);
         }
-        if(gameManager.Instance != null)
+        if(GameManager.Instance != null)
         {
-            var dic = gameManager.Instance.uiInfoManager.allWeaponDamage();
+            var dic = UIManager.Instance.allWeaponDamage();
             foreach (var item in dic)
             {
                 var it = GameObject.Instantiate(WeaponDamageItemPrefab, scrollContent.transform);
