@@ -11,6 +11,7 @@ public class ItemTplInfo : BaseTplInfo
     public int Rank { get; set; }
     public string Description { get; set; }
     public int Price { get; set; }
+    public int Index { get; set; }
     public int MaxOwnCount { get; set; }
 }
 

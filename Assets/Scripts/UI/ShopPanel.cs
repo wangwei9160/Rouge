@@ -41,8 +41,9 @@ public class ShopPanel : MonoBehaviour
         for(int i = 0; i < 4; i++)
         {
             GameObject go = ScrollViewContent.transform.GetChild(i).gameObject;
-            GameObject item = go.transform.GetChild(0).gameObject; 
-            ItemTplInfo info = TplUtil.GetItemTplDic()[1];
+            GameObject item = go.transform.GetChild(0).gameObject;
+            int rd = Random.Range(1, 3 + 1);
+            ItemTplInfo info = TplUtil.GetItemTplDic()[rd];
             go.name = string.Format("item-{0}-{1}", info.ID, info.Name);
             item.GetComponent<BuyItemScript>().ResetItem(info);
         }
