@@ -18,13 +18,15 @@ public class BuyItemScript : MonoBehaviour
     public Button LockButton;           // 锁定按钮
     public TMP_Text LockText;           // 锁定解锁文字
     public bool isLock = false;         // 锁定检测
+    public bool isItem = true;          // 判断物品类型
+    public int ID;                      // 物品编号
 
     private void Start()
     {
         ItemLimit.gameObject.SetActive(false);
         buyButton.onClick.AddListener(() =>
         {
-            Debug.Log("Buy " + ItemName.text);
+            GameManager.Instance.BuyItemByID(ID);
             gameObject.SetActive(false);
         });
 
@@ -45,6 +47,7 @@ public class BuyItemScript : MonoBehaviour
 
     public void ResetItem(ItemTplInfo item)
     {
+        ID = item.ID;
         ItemName.text = item.Name;
         ItemDescription.text = item.Description;
         ItemGold.text = item.Price.ToString();

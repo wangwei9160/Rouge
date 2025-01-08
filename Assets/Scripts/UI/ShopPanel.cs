@@ -8,32 +8,46 @@ public class ShopPanel : MonoBehaviour
 {
     // 商店按钮
     public Button GoButton;
+    public Button RefeshButton;
 
     // 奖励信息
-    public GameObject awardPrefab;
+    public GameObject awardPrefab;      
 
-    public GameObject ScrollViewContent;
+    public GameObject ScrollViewContent;    // 商店content
 
-    void Awake()
+    public GameObject playerAttr;            // 角色属性
+
+    public GameData GameDataInstance
     {
-        RefreshAllShopItem();
+        get
+        {
+            if (GameManager.Instance == null)
+            {
+                Debug.LogError("GameManager instance is not set!");
+                return null;
+            }
+            return GameManager.Instance.gameData;
+        }
     }
 
     void Start()
     {
-        GoButton.onClick.AddListener(nextLevel);
+        GoButton.onClick.AddListener(nextWave);
+        RefeshButton.onClick.AddListener(RefreshAll);
     }
 
     // 下一关
-    private void nextLevel()
+    private void nextWave()
     {
         GameContext.CurrentLevel += 1;
         GameContext.number.res = 0;
         GameManager.Instance.TransState(StateID.FightState);
     }
 
-    void Update()
+    private void RefreshAll()
     {
+        RefreshAllShopItem();
+        RefreshPlayerAttribute();
     }
 
     public void RefreshAllShopItem()
@@ -46,7 +60,13 @@ public class ShopPanel : MonoBehaviour
             ItemTplInfo info = TplUtil.GetItemTplDic()[rd];
             go.name = string.Format("item-{0}-{1}", info.ID, info.Name);
             item.GetComponent<BuyItemScript>().ResetItem(info);
+            item.SetActive(true);// 确保刷新出来
         }
+    }
+
+    public void RefreshPlayerAttribute()
+    {
+        playerAttr.GetComponent<PlayerAttributeUI>().Refresh(GameDataInstance);
     }
 
     //private void ClearAndAddElements()

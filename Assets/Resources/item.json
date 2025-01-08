@@ -3,7 +3,7 @@
     "ID": 1,
     "Name": "红苹果",
     "Rank": 1,
-    "Description": "每次受到攻击时，有<color=\"#44BF19\">10%</color>的概率生成1<color=\"#44BF19\"></color>枚<color=\"#FBE031\">金币</color>",
+    "Description": "获得<color=\"#38b48b\">5</color>点最大生命值",
     "Price": 40,
     "Index" : 0,
     "MaxOwnCount": 0
@@ -12,7 +12,7 @@
     "ID": 2,
     "Name": "绿苹果",
     "Rank": 2,
-    "Description": "每次受到攻击时，有<color=\"#44BF19\">20%</color>的概率生成1<color=\"#44BF19\"></color>枚<color=\"#FBE031\">金币</color>",
+    "Description": "获得<color=\"#00a497\">10</color>点最大生命值",
     "Price": 50,
     "Index" : 1,
     "MaxOwnCount": 0
@@ -20,8 +20,8 @@
   {
     "ID": 3,
     "Name": "橙子",
-    "Rank": 2,
-    "Description": "每次受到攻击时，有<color=\"#44BF19\">30%</color>的概率生成1<color=\"#44BF19\"></color>枚<color=\"#FBE031\">金币</color>",
+    "Rank": 3,
+    "Description": "获得<color=\"#e6b422\">10</color>枚金币",
     "Price": 50,
     "Index" : 2,
     "MaxOwnCount": 0

@@ -2,7 +2,9 @@
 
 public class 超级会员 : BaseItem 
 {
-    public override int ID => 50;
+    public override int ID => 1000;
+
+    public override string Name => "超级会员";
 
     public override void OnGet()
     {

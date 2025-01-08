@@ -4,6 +4,8 @@ public class 普通会员 : BaseItem
 {
     public override int ID => 50;
 
+    public override string Name => "普通会员";
+
     public override void OnGet()
     {
         base.OnGet();

@@ -7,7 +7,15 @@ using UnityEngine;
 public class GameManager : ManagerBase<GameManager>
 {
     public StateID state = StateID.FightState;
-    
+
+    public GameData gameData;   // ÓÎÏ·Êý¾Ý
+
+    private void Start()
+    {
+        gameData = new GameData();
+    }
+
+
     void Update()
     {
         if(GameContext.number != null)
@@ -35,4 +43,10 @@ public class GameManager : ManagerBase<GameManager>
         }
     }
 
+    public void BuyItemByID(int id)
+    {
+        Debug.Log(TplUtil.GetItemTplDic()[id].Name);
+        ItemFactory.GetItemByID(id).OnGet();
+        UIManager.Instance.ShopUI.GetComponent<ShopPanel>().RefreshPlayerAttribute();
+    }
 }

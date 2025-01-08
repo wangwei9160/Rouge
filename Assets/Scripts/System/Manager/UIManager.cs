@@ -11,8 +11,8 @@ using UnityEngine.UI;
 public class UIManager : ManagerBase<UIManager>
 {
     // 关卡UI
-    public Text mCurrentLevel;      // 当前波次
-    public Text EnemyCount;         // 敌人计数
+    public Text CurrentWave;                    // 当前波次
+    public Text CurrentWaveEnemyCount;         // 敌人计数
 
     private Action EnemyNumberUpdate;   
     private Action GameOverUI;
@@ -26,7 +26,7 @@ public class UIManager : ManagerBase<UIManager>
     // 商店UI
     public GameObject ShopUI;
     public bool[] isLock = new bool[4];
-
+    
 
     void Start()
     {
@@ -44,16 +44,16 @@ public class UIManager : ManagerBase<UIManager>
         if (GameManager.Instance.state == StateID.ShopState)
         {
             ShopUI.SetActive(true);
-            mCurrentLevel.gameObject.SetActive(false);
-            EnemyCount.gameObject.SetActive(false);
+            CurrentWave.gameObject.SetActive(false);
+            CurrentWaveEnemyCount.gameObject.SetActive(false);
             return;
         }
         if(GameManager.Instance.state == StateID.FightState)
         {
             UpdateCurrentLevel();
             ShopUI.SetActive(false);
-            mCurrentLevel.gameObject.SetActive(true);
-            EnemyCount.gameObject.SetActive(true);
+            CurrentWave.gameObject.SetActive(true);
+            CurrentWaveEnemyCount.gameObject.SetActive(true);
         }
         if (EnemyNumberUpdate != null)
         {
@@ -80,7 +80,7 @@ public class UIManager : ManagerBase<UIManager>
 
     public void UpdateCurrentLevel()
     {
-        mCurrentLevel.text = "第 " + GameContext.CurrentLevel + " 关";
+        CurrentWave.text = "第 " + GameContext.CurrentLevel + " 关";
     }
 
     // 更新敌人数量
@@ -92,7 +92,7 @@ public class UIManager : ManagerBase<UIManager>
 
     private void UpdateEnemy()
     {
-        EnemyCount.text = GameContext.number.res.ToString() + " / " + GameContext.number.total.ToString();
+        CurrentWaveEnemyCount.text = GameContext.number.res.ToString() + " / " + GameContext.number.total.ToString();
     }
 
 }

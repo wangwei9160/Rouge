@@ -2,8 +2,9 @@
 public enum Item 
 {
     #region Common
-    苹果 = 1,
-    经验瓶 = 2,
+    红苹果 = 1,
+    绿苹果 = 2,
+    橙子 = 3,
     普通会员 = 50,
     #endregion
 

@@ -1,23 +1,18 @@
 using UnityEngine;
 
-public class ItemInfo
-{
-    public string Name { get; set; }
-}
-
 public class BaseItem 
 {
     public virtual int ID { get; set; }
 
-    public ItemInfo Info { get; }
+    public virtual string Name { get; set; }
 
     public virtual void OnGet()
     {
-        Debug.Log("获得道具 : " + Info.Name);
+        Debug.Log("获得道具 : " + Name);
     }
 
     public virtual void OnDiscard()
     {
-        Debug.Log("丢弃道具 : " + Info.Name);
+        Debug.Log("丢弃道具 : " + Name);
     }
 }
