@@ -18,7 +18,6 @@ public static class ItemFactory
     private static Dictionary<int, Type> ItemTypeMap = new Dictionary<int, Type>();
     private static Dictionary<int , BaseItem> ItemInstanceMap = new Dictionary<int , BaseItem>();
 
-
     static ItemFactory()
     {
         AutoRegisterItems();

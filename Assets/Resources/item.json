@@ -11,7 +11,7 @@
   {
     "ID": 2,
     "Name": "绿苹果",
-    "Rank": 2,
+    "Rank": 1,
     "Description": "获得<color=\"#00a497\">10</color>点最大生命值",
     "Price": 50,
     "Index" : 1,
@@ -20,10 +20,46 @@
   {
     "ID": 3,
     "Name": "橙子",
-    "Rank": 3,
+    "Rank": 1,
     "Description": "获得<color=\"#e6b422\">10</color>枚金币",
     "Price": 50,
     "Index" : 2,
+    "MaxOwnCount": 0
+  },
+  {
+    "ID": 4,
+    "Name": "普通会员",
+    "Rank": 1,
+    "Description": "获得普通会员身份",
+    "Price": 50,
+    "Index" : 3,
+    "MaxOwnCount": 0
+  },
+  {
+    "ID": 5,
+    "Name": "中级会员",
+    "Rank": 2,
+    "Description": "获得中级会员身份",
+    "Price": 100,
+    "Index" : 4,
+    "MaxOwnCount": 0
+  },
+  {
+    "ID": 6,
+    "Name": "高级会员",
+    "Rank": 3,
+    "Description": "获得高级会员身份",
+    "Price": 200,
+    "Index" : 5,
+    "MaxOwnCount": 0
+  },
+  {
+    "ID": 7,
+    "Name": "超级会员",
+    "Rank": 4,
+    "Description": "获得超级会员身份",
+    "Price": 500,
+    "Index" : 6,
     "MaxOwnCount": 0
   }
 ]

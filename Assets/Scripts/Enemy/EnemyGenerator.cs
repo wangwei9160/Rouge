@@ -74,6 +74,7 @@ public class EnemyGenerator : ManagerBase<EnemyGenerator>
                 {
                     StartCoroutine(DieAction(item));
                     tmp.ChangeStatus(6);
+                    GameManager.Instance.gameData.GetExp(10);
                     toRemove.Add(item);
                 }
             }

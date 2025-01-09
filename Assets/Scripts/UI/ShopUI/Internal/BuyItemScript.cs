@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class BuyItemScript : MonoBehaviour 
 {
     // GameObject
+    public Image ItemBG;                // 图标的背景表示稀有度
     public Image ItemIcon;              // 图标
     public TMP_Text ItemType;           // 商品类型
     public TMP_Text ItemName;           // 商品名
@@ -48,6 +50,7 @@ public class BuyItemScript : MonoBehaviour
     public void ResetItem(ItemTplInfo item)
     {
         ID = item.ID;
+        ItemBG.sprite = AssetManager.Instance.ItemRankSprite[item.Rank];
         ItemName.text = item.Name;
         ItemDescription.text = item.Description;
         ItemGold.text = item.Price.ToString();

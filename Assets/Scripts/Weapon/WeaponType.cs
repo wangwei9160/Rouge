@@ -2,7 +2,8 @@
 
 public enum WeaponType
 {
-    Unknown = 0,
+    Unknown = -1,
+    Base,
     Common,
     Rare,
     Epic,

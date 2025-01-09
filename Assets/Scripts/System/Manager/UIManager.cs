@@ -26,6 +26,9 @@ public class UIManager : ManagerBase<UIManager>
     // 商店UI
     public GameObject ShopUI;
     public bool[] isLock = new bool[4];
+
+    // 角色信息显示
+    public GameObject PlayerInfoShow;
     
 
     void Start()
@@ -44,6 +47,7 @@ public class UIManager : ManagerBase<UIManager>
         if (GameManager.Instance.state == StateID.ShopState)
         {
             ShopUI.SetActive(true);
+            PlayerInfoShow.gameObject.SetActive(false);
             CurrentWave.gameObject.SetActive(false);
             CurrentWaveEnemyCount.gameObject.SetActive(false);
             return;
@@ -52,6 +56,8 @@ public class UIManager : ManagerBase<UIManager>
         {
             UpdateCurrentLevel();
             ShopUI.SetActive(false);
+            PlayerInfoShow.gameObject.SetActive(true);
+            UpdatePlayerInfoShow();
             CurrentWave.gameObject.SetActive(true);
             CurrentWaveEnemyCount.gameObject.SetActive(true);
         }
@@ -93,6 +99,11 @@ public class UIManager : ManagerBase<UIManager>
     private void UpdateEnemy()
     {
         CurrentWaveEnemyCount.text = GameContext.number.res.ToString() + " / " + GameContext.number.total.ToString();
+    }
+
+    public void UpdatePlayerInfoShow()
+    {
+        PlayerInfoShow.GetComponent<PlayerInfoUI>().UpdateExp(GameManager.Instance.gameData.curLevel , GameManager.Instance.gameData.curExp , GameManager.Instance.gameData.nextLevelExp);
     }
 
 }

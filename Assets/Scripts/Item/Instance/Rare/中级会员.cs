@@ -2,7 +2,7 @@
 
 public class 中级会员 : BaseItem 
 {
-    public override int ID => 100;
+    public override int ID => 5;
 
     public override string Name => "中级会员";
 

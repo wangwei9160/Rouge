@@ -17,4 +17,5 @@ public class AssetManager : ScriptableObject
     }
 
     public List<Sprite> itemSprite;
+    public List<Sprite> ItemRankSprite;
 }

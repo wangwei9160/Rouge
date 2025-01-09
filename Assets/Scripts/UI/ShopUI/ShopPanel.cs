@@ -15,7 +15,10 @@ public class ShopPanel : MonoBehaviour
 
     public GameObject ScrollViewContent;    // 商店content
 
-    public GameObject playerAttr;            // 角色属性
+    public GameObject WeaponSlot;           // 武器槽
+    public GameObject ItemSlot;             // 道具槽
+
+    public GameObject playerAttr;           // 角色属性
 
     public GameData GameDataInstance
     {
@@ -44,10 +47,11 @@ public class ShopPanel : MonoBehaviour
         GameManager.Instance.TransState(StateID.FightState);
     }
 
-    private void RefreshAll()
+    public void RefreshAll()
     {
         RefreshAllShopItem();
         RefreshPlayerAttribute();
+        RefreshBagSlot();
     }
 
     public void RefreshAllShopItem()
@@ -56,7 +60,7 @@ public class ShopPanel : MonoBehaviour
         {
             GameObject go = ScrollViewContent.transform.GetChild(i).gameObject;
             GameObject item = go.transform.GetChild(0).gameObject;
-            int rd = Random.Range(1, 3 + 1);
+            int rd = Random.Range(1, 7 + 1);
             ItemTplInfo info = TplUtil.GetItemTplDic()[rd];
             go.name = string.Format("item-{0}-{1}", info.ID, info.Name);
             item.GetComponent<BuyItemScript>().ResetItem(info);
@@ -67,6 +71,14 @@ public class ShopPanel : MonoBehaviour
     public void RefreshPlayerAttribute()
     {
         playerAttr.GetComponent<PlayerAttributeUI>().Refresh(GameDataInstance);
+    }
+
+    public void RefreshWeaponSlot() { 
+    }
+
+    public void RefreshBagSlot()
+    {
+        ItemSlot.GetComponent<ItemSlotUI>().Refresh(GameDataInstance);
     }
 
     //private void ClearAndAddElements()
