@@ -12,7 +12,7 @@ public class ItemButtonUI : MonoBehaviour
     public void SetItemUI(int id , int cnt)
     {
         ItemTplInfo info = TplUtil.GetItemTplDic()[id];
-        BG.sprite = AssetManager.Instance.ItemRankSprite[info.Rank];
+        BG.sprite = AssetManager.Instance.RankSprite[info.Rank];
         Icon.color = Color.white;
         Icon.sprite = AssetManager.Instance.itemSprite[info.Index];
         if(cnt > 1)

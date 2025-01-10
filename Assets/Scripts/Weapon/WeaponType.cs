@@ -1,6 +1,6 @@
 // ÎäÆ÷Ï¡ÓĞ¶È
 
-public enum WeaponType
+public enum WeaponRank
 {
     Unknown = -1,
     Base,

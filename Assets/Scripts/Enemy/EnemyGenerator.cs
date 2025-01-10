@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 
 
-public class EnemyGenerator : ManagerBase<EnemyGenerator>
+public class EnemyGenerator : ManagerBaseWithoutPersist<EnemyGenerator>
 {
 
     public GameObject monster;
@@ -37,7 +37,6 @@ public class EnemyGenerator : ManagerBase<EnemyGenerator>
         waveCount = 0;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(GameManager.Instance.state == StateID.FightState)
@@ -87,9 +86,12 @@ public class EnemyGenerator : ManagerBase<EnemyGenerator>
         else
         {
             init();
+            foreach (var item in monsterController)
+            {
+                Destroy(item);
+            }
         }
 
-        
     }
 
     // 获得最前方的敌人
@@ -117,6 +119,7 @@ public class EnemyGenerator : ManagerBase<EnemyGenerator>
         monster.SetActive(true);
         yield return new WaitForSeconds(0.1f);
         monster.SetActive(false);
-
+        Destroy(monster);
     }
+
 }

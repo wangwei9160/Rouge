@@ -28,7 +28,15 @@ public class BuyItemScript : MonoBehaviour
         ItemLimit.gameObject.SetActive(false);
         buyButton.onClick.AddListener(() =>
         {
-            GameManager.Instance.BuyItemByID(ID);
+            if (isItem) GameManager.Instance.BuyItemByID(ID);
+            else
+            {
+                if (!GameManager.Instance.BuyWeaponByID(ID))
+                {
+                    // ¹ºÂòÊ§°Ü
+                    return;
+                }
+            }
             gameObject.SetActive(false);
         });
 
@@ -50,11 +58,25 @@ public class BuyItemScript : MonoBehaviour
     public void ResetItem(ItemTplInfo item)
     {
         ID = item.ID;
-        ItemBG.sprite = AssetManager.Instance.ItemRankSprite[item.Rank];
+        ItemBG.sprite = AssetManager.Instance.RankSprite[item.Rank];
+        ItemType.text = "µÀ¾ß";
         ItemName.text = item.Name;
         ItemDescription.text = item.Description;
         ItemGold.text = item.Price.ToString();
         ItemIcon.sprite = AssetManager.Instance.itemSprite[item.Index];
+        isItem = true;
+    }
+
+    public void ResetWeapon(WeaponTplInfo item)
+    {
+        ID = item.ID;
+        ItemBG.sprite = AssetManager.Instance.RankSprite[item.Rank];
+        ItemType.text = "ÎäÆ÷";
+        ItemName.text = item.Name;
+        ItemDescription.text = item.Description;
+        ItemGold.text = item.Price.ToString();
+        ItemIcon.sprite = AssetManager.Instance.WeaponSprite[item.Index];
+        isItem = false;
     }
 
 }

@@ -68,10 +68,68 @@ public class GameManager : ManagerBase<GameManager>
 
     public void BuyItemByID(int id)
     {
-        Debug.Log(TplUtil.GetItemTplDic()[id].Name);
+        //Debug.Log(TplUtil.GetItemTplDic()[id].Name);
         ItemFactory.GetItemByID(id).OnGet();
-        GameManager.Instance.gameData.OnGetItemByID(id);
+        gameData.OnGetItemByID(id);
         UIManager.Instance.ShopUI.GetComponent<ShopPanel>().RefreshPlayerAttribute();
         UIManager.Instance.ShopUI.GetComponent<ShopPanel>().RefreshBagSlot();
     }
+
+    public bool BuyWeaponByID(int id)
+    {
+        //Debug.Log(TplUtil.GetWeaponTplDic()[id].Name);
+        int idx = FindWeaponSlotEmptyIndex();
+        if (idx == -1)
+        {
+            WeaponTplInfo weapon = TplUtil.GetWeaponTplDic()[id];
+            if(weapon.Next == -1)
+            {
+                return false;
+            }
+            idx = FindWeaponSlotIndexSameAsID(id);
+            if(idx == -1)
+            {
+                return false;
+            }else
+            {
+                gameData.WeaponIDs[idx] = weapon.Next;
+            }
+        }else
+        {
+            gameData.WeaponIDs[idx] = id;
+        }
+        UIManager.Instance.ShopUI.GetComponent<ShopPanel>().RefreshWeaponSlot();
+        return true;
+    }
+
+    // 找到一个空位
+    private int FindWeaponSlotEmptyIndex()
+    {
+        int idx = -1;
+        for (int i = 0; i < gameData.WeaponSlot; i++)
+        {
+            if (gameData.WeaponIDs[i] == -1)
+            {
+                idx = i;
+                break;
+            }
+        }
+        return idx;
+    }
+
+    // 找到第一个和id相同的值的位置
+    private int FindWeaponSlotIndexSameAsID(int id)
+    {
+        int idx = -1;
+        for (int i = 0; i < gameData.WeaponSlot; i++)
+        {
+            if (gameData.WeaponIDs[i] == id)
+            {
+                idx = i;
+                break;
+            }
+        }
+        return idx;
+    }
+
 }

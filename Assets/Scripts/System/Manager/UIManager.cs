@@ -86,7 +86,7 @@ public class UIManager : ManagerBase<UIManager>
 
     public void UpdateCurrentLevel()
     {
-        CurrentWave.text = "第 " + GameContext.CurrentLevel + " 关";
+        CurrentWave.text = "第 " + GameManager.Instance.gameData.CurrentWave + " 关";
     }
 
     // 更新敌人数量

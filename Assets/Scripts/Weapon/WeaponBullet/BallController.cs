@@ -3,21 +3,20 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
-public class BallController : BaseWeapon
+public class BallController : MonoBehaviour
 {
     public Vector3 dir;
-
-    public Weapon weapon;
+    public float damage = 10f;
+    public float moveSpeed = 10f;
 
     public bool isAlive = true;
 
-    protected override void Start()
+    protected void Start()
     {
         Destroy(gameObject , 5);
-        weapon = WeaponManager.Instance.getWeapon(1);
     }
 
-    protected override void Update()
+    protected  void Update()
     {
         Move();
     }
@@ -28,7 +27,7 @@ public class BallController : BaseWeapon
         {
             Destroy(gameObject);
         }
-        gameObject.transform.position += dir * weapon.moveSpeed * Time.deltaTime;
+        gameObject.transform.position += dir * moveSpeed * Time.deltaTime;
     }
 
     public void SetMoveToTarget(GameObject player , GameObject target)
@@ -40,17 +39,21 @@ public class BallController : BaseWeapon
         gameObject.transform.rotation = rota;
     }
 
-    protected override void OnTriggerEnter(Collider other)
+    public void ResetInfo(float dam)
+    {
+        damage = dam;
+    }
+
+    protected void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.CompareTag("Enemy") && isAlive)
         {
-            bool ok = other.gameObject.GetComponent<MonsterController>().Damge(weapon.damage);
+            bool ok = other.gameObject.GetComponent<MonsterController>().Damge(damage);
             if (!ok) return;
             isAlive = false;
-            
             Destroy(gameObject);
-            DamageUIManager.Instance.ShowDamgeText(other.gameObject.transform, weapon.damage);
-            UIManager.Instance.UpdateWeaponDamage("Ball", weapon.damage);
+            DamageUIManager.Instance.ShowDamgeText(other.gameObject.transform,(int)damage);
+            UIManager.Instance.UpdateWeaponDamage("Ball", (int)damage);
         }
     }
 

@@ -42,9 +42,9 @@ public class ShopPanel : MonoBehaviour
     // 下一关
     private void nextWave()
     {
-        GameContext.CurrentLevel += 1;
         GameContext.number.res = 0;
         GameManager.Instance.TransState(StateID.FightState);
+        GameManager.Instance.gameData.CurrentWave += 1;
     }
 
     public void RefreshAll()
@@ -52,6 +52,7 @@ public class ShopPanel : MonoBehaviour
         RefreshAllShopItem();
         RefreshPlayerAttribute();
         RefreshBagSlot();
+        RefreshWeaponSlot();
     }
 
     public void RefreshAllShopItem()
@@ -60,10 +61,21 @@ public class ShopPanel : MonoBehaviour
         {
             GameObject go = ScrollViewContent.transform.GetChild(i).gameObject;
             GameObject item = go.transform.GetChild(0).gameObject;
-            int rd = Random.Range(1, 7 + 1);
-            ItemTplInfo info = TplUtil.GetItemTplDic()[rd];
-            go.name = string.Format("item-{0}-{1}", info.ID, info.Name);
-            item.GetComponent<BuyItemScript>().ResetItem(info);
+            int WeaponOrItem = Random.Range(0, 1+1);
+            if(WeaponOrItem == 0)
+            {
+                int rd = Random.Range(1, 5 + 1);
+                WeaponTplInfo info = TplUtil.GetWeaponTplDic()[rd];
+                go.name = string.Format("weapon-{0}-{1}", info.ID, info.Name);
+                item.GetComponent<BuyItemScript>().ResetWeapon(info);
+            }else
+            {
+                int rd = Random.Range(1, 9 + 1);
+                ItemTplInfo info = TplUtil.GetItemTplDic()[rd];
+                go.name = string.Format("item-{0}-{1}", info.ID, info.Name);
+                item.GetComponent<BuyItemScript>().ResetItem(info);
+            }
+            
             item.SetActive(true);// 确保刷新出来
         }
     }
@@ -73,7 +85,9 @@ public class ShopPanel : MonoBehaviour
         playerAttr.GetComponent<PlayerAttributeUI>().Refresh(GameDataInstance);
     }
 
-    public void RefreshWeaponSlot() { 
+    public void RefreshWeaponSlot()
+    {
+        WeaponSlot.GetComponent<WeaponSlotUI>().Refresh(GameDataInstance);
     }
 
     public void RefreshBagSlot()

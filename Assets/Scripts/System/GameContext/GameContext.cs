@@ -28,8 +28,6 @@ public static class GameContext
     public static bool isLevelFinish = false;   // 当前关卡通关
     public static bool isAward = false;         // 通关奖励
 
-    public static int CurrentLevel = 1;         // 当前关卡信息
-
     public static EnemyNumber number;           //  当前关卡敌人数量信息
 
 }

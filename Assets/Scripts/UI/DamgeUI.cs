@@ -8,8 +8,8 @@ public class DamgeUI : MonoBehaviour
     public float LifeTime = 0.5f;
     public float mCurrentSecond = 0f;
 
-    public float Speed = 1f;
-    public float ColorFadedSpeed = 10f;
+    public float Speed = 1.5f;
+    public float ColorFadedSpeed = 20f;
 
 
     public TMP_Text damageUI;
@@ -23,6 +23,9 @@ public class DamgeUI : MonoBehaviour
     void Start()
     {
         curColor = damageUI.color;
+        float rdX = Random.Range(-0.2f, 0.2f);
+        float rdY = Random.Range(-0.2f, 0.2f);
+        transform.position = transform.position + new Vector3(rdX, rdY, 0);
     }
 
     void Update()
