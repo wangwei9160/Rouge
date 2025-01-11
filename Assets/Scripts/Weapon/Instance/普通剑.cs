@@ -20,6 +20,6 @@ public class ∆’Õ®Ω£ : BaseWeapon
         }
         GameObject tmp = Instantiate(go, transform);
         tmp.GetComponent<BallController>().SetMoveToTarget(gameObject,tg);
-        tmp.GetComponent<BallController>().ResetInfo(attack);
+        tmp.GetComponent<BallController>().ResetInfo(attack , "∆’Õ®Ω£");
     }
 }

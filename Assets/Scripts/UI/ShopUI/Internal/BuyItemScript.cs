@@ -75,7 +75,7 @@ public class BuyItemScript : MonoBehaviour
         ItemName.text = item.Name;
         ItemDescription.text = item.Description;
         ItemGold.text = item.Price.ToString();
-        ItemIcon.sprite = AssetManager.Instance.WeaponSprite[item.Index];
+        ItemIcon.sprite = AssetManager.Instance.WeaponForShowSprite[item.Index];
         isItem = false;
     }
 

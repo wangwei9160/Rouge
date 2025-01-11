@@ -5,7 +5,13 @@ using UnityEngine;
 
 public class BaseWeapon : MonoBehaviour 
 {
+
+    // 标识武器的ID，用于初始化武器
     public virtual int ID { get; private set; }
+    public virtual void InitID(int id)
+    {
+        this.ID = id;
+    }
 
     protected WeaponRank type = WeaponRank.Unknown;
 
@@ -28,10 +34,7 @@ public class BaseWeapon : MonoBehaviour
 
     protected virtual void Start() { }
 
-    public virtual void InitID(int id)
-    {
-        this.ID = id;
-    }
+    
 
     protected virtual void Update()
     {

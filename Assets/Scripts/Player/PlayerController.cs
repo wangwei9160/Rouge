@@ -38,8 +38,9 @@ public class PlayerController : MonoBehaviour
                     if (gd.WeaponIDs[i] != -1)
                     {
                         WeaponTplInfo info = TplUtil.GetWeaponTplDic()[gd.WeaponIDs[i]];// 获得这把武器的信息
+
                         GameObject go = Instantiate(AssetManager.Instance.WeaponPrefabs[info.Index], Weapons.transform);
-                        go.GetComponent<普通剑>().InitID(info.ID);
+                        go.GetComponent<BaseWeapon>().InitID(info.ID);
 
                     }
                 }

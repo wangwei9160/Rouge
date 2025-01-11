@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 
@@ -19,5 +20,5 @@ public class AssetManager : ScriptableObject
     public List<Sprite> itemSprite;
     public List<Sprite> RankSprite;
     public List<GameObject> WeaponPrefabs;
-    public List<Sprite> WeaponSprite;
+    public List<Sprite> WeaponForShowSprite;
 }

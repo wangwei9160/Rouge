@@ -26,5 +26,7 @@ MonoBehaviour:
   - {fileID: 2561534620446350566, guid: 7034ee7d93c65564daa5b5c841d71546, type: 3}
   WeaponPrefabs:
   - {fileID: 5886433542735065144, guid: 1e57b10cbb71c704d9f4880395b69758, type: 3}
-  WeaponSprite:
+  - {fileID: 2586661187287592978, guid: 2d1287410283f8141ad669c506c4f998, type: 3}
+  WeaponForShowSprite:
   - {fileID: 21300000, guid: feb0968e273d1314cb1402497643fd4b, type: 3}
+  - {fileID: 21300000, guid: 608ebeb67dfd0f34d97dc9060b0030d4, type: 3}

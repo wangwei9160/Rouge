@@ -50,7 +50,7 @@ public class GameData
         {
             WeaponIDs[i] = -1;
         }
-        WeaponIDs[0] = 1; // 暂时默认获得一把剑，后续修改为初始自主选择
+        WeaponIDs[0] = 6; // 暂时默认获得一个武器，后续修改为初始自主选择
         ShopItemID = new int[ShopSlot];
         ShopItemType = new int[ShopSlot];
         for(int i = 0;i < ShopSlot; i++)

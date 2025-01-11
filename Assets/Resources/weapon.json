@@ -57,5 +57,63 @@
     "AttackSpeed": 1.5,
     "AttackRange" : 40.0,
     "Next" : -1
+  },{
+    "ID": 6,
+    "Name": "小丑牌",
+    "Rank": 0,
+    "Description": "一次发射三张小丑牌",
+    "Price": 20,
+    "Index": 1,
+    "Attack": 5,
+    "AttackSpeed": 2.0,
+    "AttackRange" : 20.0,
+    "Next" : 7
+  },
+  {
+    "ID": 7,
+    "Name": "小丑牌II",
+    "Rank": 1,
+    "Description": "一次发射三张小丑牌",
+    "Price": 20,
+    "Index": 1,
+    "Attack": 10,
+    "AttackSpeed": 2.0,
+    "AttackRange" : 20.0,
+    "Next" : 8
+  },
+  {
+    "ID": 8,
+    "Name": "小丑牌III",
+    "Rank": 2,
+    "Description": "一次发射三张小丑牌",
+    "Price": 20,
+    "Index": 1,
+    "Attack": 15,
+    "AttackSpeed": 1.5,
+    "AttackRange" : 30.0,
+    "Next" : 9
+  },
+  {
+    "ID": 9,
+    "Name": "小丑牌IV",
+    "Rank": 3,
+    "Description": "一次发射三张小丑牌",
+    "Price": 20,
+    "Index": 1,
+    "Attack": 20,
+    "AttackSpeed": 1.5,
+    "AttackRange" : 30.0,
+    "Next" : 10
+  },{
+    "ID": 10,
+    "Name": "小丑牌V",
+    "Rank": 4,
+    "Description": "一次发射三张小丑牌",
+    "Price": 20,
+    "Index": 1,
+    "Attack": 30,
+    "AttackSpeed": 1.5,
+    "AttackRange" : 40.0,
+    "Next" : -1
   }
 ]

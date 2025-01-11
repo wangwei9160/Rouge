@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5886433542735065144
+--- !u!1 &2586661187287592978
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,41 +8,41 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3522168689586402643}
-  - component: {fileID: 6533567286186603657}
+  - component: {fileID: 6828025627286460222}
+  - component: {fileID: 1532773981545337379}
   m_Layer: 0
-  m_Name: Sword
+  m_Name: Card
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3522168689586402643
+--- !u!4 &6828025627286460222
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5886433542735065144}
+  m_GameObject: {fileID: 2586661187287592978}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.1, z: 0}
+  m_LocalPosition: {x: 0, y: 0.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6533567286186603657
+--- !u!114 &1532773981545337379
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5886433542735065144}
+  m_GameObject: {fileID: 2586661187287592978}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce52f81e2539b8c4aa73c26c809f5f05, type: 3}
+  m_Script: {fileID: 11500000, guid: 8e336284f58eb6a40bc84800fa469224, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   "\u500D\u7387": 0.5
-  go: {fileID: 8592565656260330533, guid: 814efb641b5417849876b1f6f6c0ac20, type: 3}
+  go: {fileID: 9069909263283253877, guid: c1a2f3967ddedd241ab9c2fc7b507d3a, type: 3}

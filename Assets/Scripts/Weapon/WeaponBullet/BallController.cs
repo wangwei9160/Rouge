@@ -1,59 +1,42 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
 
-public class BallController : MonoBehaviour
+public class BallController : 直线飞行
 {
-    public Vector3 dir;
-    public float damage = 10f;
-    public float moveSpeed = 10f;
+    public float damage = 10f;          // 伤害
+    
 
-    public bool isAlive = true;
+    public string Name;                 // 来源武器的名称
 
-    protected void Start()
+    public void ResetInfo(float dam , string name)
     {
-        Destroy(gameObject , 5);
+        damage = dam;
+        Name = name;
     }
 
-    protected  void Update()
-    {
-        Move();
-    }
-
-    public void Move()
-    {
-        if (gameObject.transform.position.z <= -15 || gameObject.transform.position.x <= -11 || gameObject.transform.position.x >= 11)
-        {
-            Destroy(gameObject);
-        }
-        gameObject.transform.position += dir * moveSpeed * Time.deltaTime;
-    }
+    public bool isAlive = true;         // 是否可以穿透
 
     public void SetMoveToTarget(GameObject player , GameObject target)
     {
         gameObject.transform.position = player.transform.position;
         // 朝向目标移动
         dir = (target.transform.position - gameObject.transform.position).normalized;
+        ResetY2Empty();
         var rota = Quaternion.LookRotation(dir);
         gameObject.transform.rotation = rota;
     }
 
-    public void ResetInfo(float dam)
-    {
-        damage = dam;
-    }
 
-    protected void OnTriggerEnter(Collider other)
+    protected override void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("Enemy") && isAlive)
+        Debug.Log(other.gameObject.tag);
+        if (other.gameObject.CompareTag("Enemy") && isAlive)
         {
             bool ok = other.gameObject.GetComponent<MonsterController>().Damge(damage);
             if (!ok) return;
             isAlive = false;
             Destroy(gameObject);
             DamageUIManager.Instance.ShowDamgeText(other.gameObject.transform,(int)damage);
-            UIManager.Instance.UpdateWeaponDamage("Ball", (int)damage);
+            UIManager.Instance.UpdateWeaponDamage(Name, (int)damage);
         }
     }
 

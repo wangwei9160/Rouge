@@ -64,7 +64,7 @@ public class ShopPanel : MonoBehaviour
             int WeaponOrItem = Random.Range(0, 1+1);
             if(WeaponOrItem == 0)
             {
-                int rd = Random.Range(1, 5 + 1);
+                int rd = Random.Range(1, 10 + 1);
                 WeaponTplInfo info = TplUtil.GetWeaponTplDic()[rd];
                 go.name = string.Format("weapon-{0}-{1}", info.ID, info.Name);
                 item.GetComponent<BuyItemScript>().ResetWeapon(info);

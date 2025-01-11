@@ -11,6 +11,6 @@ public class WeaponButtonUI : MonoBehaviour
         WeaponTplInfo info = TplUtil.GetWeaponTplDic()[id];
         BG.sprite = AssetManager.Instance.RankSprite[info.Rank];
         Icon.color = Color.white;
-        Icon.sprite = AssetManager.Instance.WeaponSprite[info.Index];
+        Icon.sprite = AssetManager.Instance.WeaponForShowSprite[info.Index];
     }
 }
