@@ -50,7 +50,6 @@ public class GameData
         {
             WeaponIDs[i] = -1;
         }
-        WeaponIDs[0] = 6; // 暂时默认获得一个武器，后续修改为初始自主选择
         ShopItemID = new int[ShopSlot];
         ShopItemType = new int[ShopSlot];
         for(int i = 0;i < ShopSlot; i++)
@@ -60,6 +59,11 @@ public class GameData
         ItemMap = new Dictionary<int, int>();
         ItemIDs = new List<int>();
         ItemCount = new List<int>();
+    }
+
+    public void Init()
+    {
+        WeaponIDs[0] = 6; // 暂时默认获得一个武器，后续修改为初始自主选择
     }
 
     public void OnGetItemByID(int id)

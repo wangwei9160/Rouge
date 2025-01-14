@@ -28,7 +28,7 @@ public class BallController : Ö±Ïß·ÉÐÐ
 
     protected override void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.gameObject.tag);
+        //Debug.Log(other.gameObject.tag);
         if (other.gameObject.CompareTag("Enemy") && isAlive)
         {
             bool ok = other.gameObject.GetComponent<MonsterController>().Damge(damage);

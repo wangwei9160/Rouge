@@ -10,6 +10,7 @@ using UnityEngine.UI;
 
 public class UIManager : ManagerBase<UIManager>
 {
+    public Transform canvas;
     // 关卡UI
     public Text CurrentWave;                    // 当前波次
     public Text CurrentWaveEnemyCount;         // 敌人计数
