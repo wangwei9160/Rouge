@@ -30,7 +30,23 @@ public class UIManager : ManagerBase<UIManager>
 
     // 角色信息显示
     public GameObject PlayerInfoShow;
-    
+    public GameObject NoticeInfoPrefab;
+
+    private void OnEnable()
+    {
+        EventCenter.AddListener(EventDefine.ShowShopUI, ShowShopUI);
+        EventCenter.AddListener(EventDefine.HideShopUI, HideShopUI);
+        EventCenter.AddListener(EventDefine.RefreshEnemyCount, RefreshEnemyCount);
+        EventCenter.AddListener<string>(EventDefine.ShowNoticeInfoUI, ShowNoticeInfoUI);
+    }
+
+    private void OnDisable()
+    {
+        EventCenter.RemoveListener(EventDefine.ShowShopUI, ShowShopUI);
+        EventCenter.RemoveListener(EventDefine.HideShopUI, HideShopUI);
+        EventCenter.RemoveListener(EventDefine.RefreshEnemyCount, RefreshEnemyCount);
+        EventCenter.RemoveListener<string>(EventDefine.ShowNoticeInfoUI, ShowNoticeInfoUI);
+    }
 
     void Start()
     {
@@ -40,28 +56,35 @@ public class UIManager : ManagerBase<UIManager>
         {
             DamageCount.SetActive(!DamageCount.activeInHierarchy);
         });
+        
     }
 
-
-    void Update()
+    private void ShowShopUI()
     {
-        if (GameManager.Instance.state == StateID.ShopState)
-        {
-            ShopUI.SetActive(true);
-            PlayerInfoShow.gameObject.SetActive(false);
-            CurrentWave.gameObject.SetActive(false);
-            CurrentWaveEnemyCount.gameObject.SetActive(false);
-            return;
-        }
-        if(GameManager.Instance.state == StateID.FightState)
-        {
-            UpdateCurrentLevel();
-            ShopUI.SetActive(false);
-            PlayerInfoShow.gameObject.SetActive(true);
-            UpdatePlayerInfoShow();
-            CurrentWave.gameObject.SetActive(true);
-            CurrentWaveEnemyCount.gameObject.SetActive(true);
-        }
+        ShopUI.SetActive(true);
+        PlayerInfoShow.gameObject.SetActive(false);
+        CurrentWave.gameObject.SetActive(false);
+        CurrentWaveEnemyCount.gameObject.SetActive(false);
+    }
+
+    private void HideShopUI()
+    {
+        UpdateCurrentLevel();
+        ShopUI.SetActive(false);
+        PlayerInfoShow.gameObject.SetActive(true);
+        UpdatePlayerInfoShow();
+        CurrentWave.gameObject.SetActive(true);
+        CurrentWaveEnemyCount.gameObject.SetActive(true);
+    }
+
+    private void ShowNoticeInfoUI(string str)
+    {
+        GameObject go = Instantiate(NoticeInfoPrefab , canvas);
+        go.GetComponent<NoticeInfoUI>().SetInfo(str);
+    }
+
+    private void RefreshEnemyCount()
+    {
         if (EnemyNumberUpdate != null)
         {
             EnemyNumberUpdate();

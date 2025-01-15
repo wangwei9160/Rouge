@@ -1,12 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class SelectUI : MonoBehaviour 
 {
     public Button Weapon;
     public Button Hero;
+    public Button StartGame;
+    public Button Back2Main;
 
     public GameObject WeaponSelect;
 
@@ -18,6 +19,14 @@ public class SelectUI : MonoBehaviour
         {
             //Debug.Log("ÌôÑ¡ÎäÆ÷");
             WeaponSelect.SetActive(true);
+        });
+        StartGame.onClick.AddListener(() =>
+        {
+            SceneManager.LoadScene("BattleScene");
+        });
+        Back2Main.onClick.AddListener(() =>
+        {
+            EventCenter.Broadcast(EventDefine.HideSelectUI);
         });
     }
 

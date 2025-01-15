@@ -39,12 +39,26 @@ public class ShopPanel : MonoBehaviour
         RefeshButton.onClick.AddListener(RefreshAll);
     }
 
+    private void OnEnable()
+    {
+        EventCenter.AddListener(EventDefine.RefreshWeapon, RefreshWeapon);
+        EventCenter.AddListener(EventDefine.RefreshItem, RefreshItem);
+        RefreshAll();
+    }
+
+    private void OnDisable()
+    {
+        EventCenter.RemoveListener(EventDefine.RefreshWeapon, RefreshWeapon);
+        EventCenter.RemoveListener(EventDefine.RefreshItem, RefreshItem);
+    }
+
     // ÏÂÒ»¹Ø
     private void nextWave()
     {
         GameContext.number.res = 0;
         GameManager.Instance.TransState(StateID.FightState);
         GameManager.Instance.gameData.CurrentWave += 1;
+        EventCenter.Broadcast(EventDefine.HideShopUI);
     }
 
     public void RefreshAll()
@@ -53,6 +67,18 @@ public class ShopPanel : MonoBehaviour
         RefreshPlayerAttribute();
         RefreshBagSlot();
         RefreshWeaponSlot();
+    }
+
+    public void RefreshWeapon()
+    {
+        RefreshPlayerAttribute();
+        RefreshWeaponSlot();
+    }
+
+    public void RefreshItem()
+    {
+        RefreshPlayerAttribute();
+        RefreshBagSlot();
     }
 
     public void RefreshAllShopItem()
@@ -95,32 +121,4 @@ public class ShopPanel : MonoBehaviour
         ItemSlot.GetComponent<ItemSlotUI>().Refresh(GameDataInstance);
     }
 
-    //private void ClearAndAddElements()
-    //{
-    //    foreach (Transform item in ScrollViewContent.transform)
-    //    {
-    //        Destroy(item.gameObject);
-    //    }
-
-    //    var vis = 0;
-    //    for(int i = 0; i < 3; i++)
-    //    {
-    //        GameObject tmp = Instantiate(awardPrefab, ScrollViewContent.transform);
-    //        int tp = GetRand(vis);
-    //        vis += (1 << tp);
-    //        tmp.GetComponent<AwardInfo>().SetAward(1,tp );
-    //    }
-    //}
-
-    //public int GetRand(int key)
-    //{
-    //    while(true)
-    //    {
-    //        int rd = Random.Range(0, 3);
-    //        if((key & (1 << rd)) == 0)
-    //        {
-    //            return rd;
-    //        }
-    //    }
-    //}
 }

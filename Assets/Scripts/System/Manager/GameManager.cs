@@ -33,26 +33,19 @@ public class GameManager : ManagerBase<GameManager>
                 if (GameContext.number.res == GameContext.number.total)
                 {
                     TransState(StateID.ShopState);
-                    StartCoroutine(Refresh());
+                    EventCenter.Broadcast(EventDefine.ShowShopUI);
                 }
             }
         }
     }
 
-    public IEnumerator Refresh()
-    {
-        UIManager.Instance.ShopUI.GetComponent<ShopPanel>().RefreshAll();
-        yield return new WaitForSeconds(0.1f);
-    }
-
     public IEnumerator LoadAsset()
     {
         yield return new WaitForSeconds(0.1f);
-        if(AssetManager.Instance != null)
+        if (AssetManager.Instance != null)
         {
             Debug.Log("Load AssetManager");
         }
-        //ItemFactory.GetItemByID(0);
     }
 
     public void TransState(StateID newState)
@@ -72,8 +65,7 @@ public class GameManager : ManagerBase<GameManager>
         //Debug.Log(TplUtil.GetItemTplDic()[id].Name);
         ItemFactory.GetItemByID(id).OnGet();
         gameData.OnGetItemByID(id);
-        UIManager.Instance.ShopUI.GetComponent<ShopPanel>().RefreshPlayerAttribute();
-        UIManager.Instance.ShopUI.GetComponent<ShopPanel>().RefreshBagSlot();
+        EventCenter.Broadcast(EventDefine.RefreshItem);
     }
 
     public bool BuyWeaponByID(int id)
@@ -85,11 +77,13 @@ public class GameManager : ManagerBase<GameManager>
             WeaponTplInfo weapon = TplUtil.GetWeaponTplDic()[id];
             if(weapon.Next == -1)
             {
+                EventCenter.Broadcast(EventDefine.ShowNoticeInfoUI, "当前武器槽没有空位");
                 return false;
             }
             idx = FindWeaponSlotIndexSameAsID(id);
             if(idx == -1)
             {
+                EventCenter.Broadcast(EventDefine.ShowNoticeInfoUI, "当前武器槽没有空位");
                 return false;
             }else
             {
@@ -99,7 +93,7 @@ public class GameManager : ManagerBase<GameManager>
         {
             gameData.WeaponIDs[idx] = id;
         }
-        UIManager.Instance.ShopUI.GetComponent<ShopPanel>().RefreshWeaponSlot();
+        EventCenter.Broadcast(EventDefine.RefreshWeapon);
         return true;
     }
 
@@ -111,27 +105,33 @@ public class GameManager : ManagerBase<GameManager>
     /// <returns></returns>
     public bool TryMerge(int id , int pos)
     {
+        WeaponTplInfo weapon = TplUtil.GetWeaponTplDic()[id];
+        if (weapon.Next == -1) // 没有下一个等级的武器
+        {
+            EventCenter.Broadcast(EventDefine.ShowNoticeInfoUI, "当前武器无法进一步升级");
+            return false;
+        }
         int idx = FindWeaponSlotIndexSameAsID(id, pos);
         if (idx == -1)      // 没有找到相同的武器
         {
-            return false;
-        }
-        WeaponTplInfo weapon = TplUtil.GetWeaponTplDic()[id];
-        if(weapon.Next == -1) // 没有下一个等级的武器
-        {
+            EventCenter.Broadcast(EventDefine.ShowNoticeInfoUI, "当前不存在相同稀有度的同种武器无法进一步合成");
             return false;
         }
         gameData.WeaponIDs[Math.Min(idx , pos)] = weapon.Next;
         gameData.WeaponIDs[Math.Max(idx , pos)] = -1;
-        UIManager.Instance.ShopUI.GetComponent<ShopPanel>().RefreshWeaponSlot();
+        EventCenter.Broadcast(EventDefine.RefreshWeapon);
         return true;
     }
 
     public void ScaleWeaponByIndex(int idx)
     {
         gameData.WeaponIDs[idx] = -1;
-        UIManager.Instance.ShopUI.GetComponent<ShopPanel>().RefreshWeaponSlot();
+        EventCenter.Broadcast(EventDefine.RefreshWeapon);
     }
+
+    /// <summary>
+    /// 辅助函数
+    /// </summary>
 
     // 找到一个空位
     private int FindWeaponSlotEmptyIndex()

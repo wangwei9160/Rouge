@@ -321,6 +321,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Weapon: {fileID: 344875933977393259}
   Hero: {fileID: 927663878398842628}
+  StartGame: {fileID: 199756758}
+  Back2Main: {fileID: 1390074165}
   WeaponSelect: {fileID: 1111200200}
 --- !u!1 &184803020
 GameObject:
@@ -860,8 +862,6 @@ MonoBehaviour:
   isSignle: 1
   signleButton: {fileID: 940812523}
   teamButton: {fileID: 2058001707}
-  GoButton: {fileID: 199756758}
-  BackButton: {fileID: 1390074165}
   BG: {fileID: 1278120009}
   buttons: {fileID: 738472833}
   SelectUI: {fileID: 117670518}

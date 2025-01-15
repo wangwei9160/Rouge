@@ -1,28 +1,29 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MainSceneManager : ManagerBaseWithoutPersist<MainSceneManager> 
 {
     public bool isSignle = true;
-    public Button signleButton;
+    public Button signleButton;     // 单人游戏进入选择界面
     public Button teamButton;
-    public Button GoButton;         // 进入选择界面
-    public Button BackButton;       // 返回主界面
 
     public GameObject BG;           // 背景
     public GameObject buttons;      // 所有按钮
     public GameObject SelectUI;     // 选择界面
 
+    private void OnEnable()
+    {
+        EventCenter.AddListener(EventDefine.ShowSelectUI, SelectShow);
+        EventCenter.AddListener(EventDefine.HideSelectUI, MainShow);
+    }
+
     void Start()
     {
         SelectUI.SetActive(false);
-        signleButton.onClick.AddListener(SelectShow);
-        GoButton.onClick.AddListener(() =>
+        signleButton.onClick.AddListener(() =>
         {
-            SceneManager.LoadScene("BattleScene");
+            EventCenter.Broadcast(EventDefine.ShowSelectUI);
         });
-        BackButton.onClick.AddListener(MainShow);
     }
 
     public void SelectShow()
