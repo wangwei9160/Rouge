@@ -12,7 +12,8 @@ public class BuyItemScript : MonoBehaviour
     public Text ItemDescription;        // 商品描述
     public TMP_Text ItemLimit;          // 商品购买限制
     public Button buyButton;            // 购买按钮
-    public TMP_Text ItemGold;           // 商品价格
+    public TMP_Text ItemGold;           // 商品价格用于显示
+    public int Price;                   // 商品价格
     public Image LockImage;             // 商品锁定图标
     public Button LockButton;           // 锁定按钮
     public TMP_Text LockText;           // 锁定解锁文字
@@ -25,7 +26,14 @@ public class BuyItemScript : MonoBehaviour
         ItemLimit.gameObject.SetActive(false);
         buyButton.onClick.AddListener(() =>
         {
-            if (isItem) GameManager.Instance.BuyItemByID(ID);
+            if (isItem)
+            {
+                if (!GameManager.Instance.BuyItemByID(ID))
+                {
+                    // 购买失败
+                    return;
+                }
+            }
             else
             {
                 if (!GameManager.Instance.BuyWeaponByID(ID))
@@ -59,6 +67,7 @@ public class BuyItemScript : MonoBehaviour
         ItemType.text = "道具";
         ItemName.text = item.Name;
         ItemDescription.text = item.Description;
+        Price = item.Price;
         ItemGold.text = item.Price.ToString();
         ItemIcon.sprite = AssetManager.Instance.itemSprite[item.Index];
         isItem = true;
@@ -71,6 +80,7 @@ public class BuyItemScript : MonoBehaviour
         ItemType.text = "武器";
         ItemName.text = item.Name;
         ItemDescription.text = item.Description;
+        Price = item.Price;
         ItemGold.text = item.Price.ToString();
         ItemIcon.sprite = AssetManager.Instance.WeaponForShowSprite[item.Index];
         isItem = false;

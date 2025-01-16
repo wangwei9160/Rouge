@@ -29,7 +29,6 @@ public class MonsterController : MonoBehaviour
         if(value == 6)
         {
             ChangeAnimation("Death");
-            UIManager.Instance.UpdateEnemyNumber(1);
         }
     }
 
@@ -37,7 +36,7 @@ public class MonsterController : MonoBehaviour
     private Animator animator;
     private string currentAnimation = "";
 
-    private float MaxHealthValue => 19f + 10 * (GameManager.Instance.gameData.CurrentWave - 1) + 20 * (GameManager.Instance.gameData.curLevel - 1);
+    private float MaxHealthValue => 19f + 5 * (GameManager.Instance.gameData.CurrentWave - 1) + 10 * (GameManager.Instance.gameData.curLevel - 1);
     private float healthValue;
     // Start is called before the first frame update
     void Start()
@@ -47,7 +46,6 @@ public class MonsterController : MonoBehaviour
         //monster.transform.position = new Vector3(9, 0, -15);
         player = GameObject.Find("Player").gameObject;
         healthValue = MaxHealthValue;
-        //Debug.Log(healthValue);
     }
 
     void Update()

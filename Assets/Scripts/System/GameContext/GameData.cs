@@ -1,13 +1,9 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
-using UnityEngine.Playables;
 
 
 [Serializable]
-public class GameData 
+public class GameData
 {
 
     public int ShopSlot = 4;                // 商店槽位
@@ -22,21 +18,24 @@ public class GameData
 
     private Dictionary<int, int> ItemMap;
 
-    public int curLevel = 1;
-    public int curExp = 0;
-    public int nextLevelExp = 100;
+    public int curLevel = 1;                // 当前等级
+    public int curExp = 0;                  // 当前经验
+    public int nextLevelExp = 100;          // 升到下一级所需经验
 
-    public int curHp = 100;
+    public int curHp = 100;                 // 当前生命值
+
+    private int _money = 0;                  // 持有金币
+
 
     public int money    // 金币
     {
         get
         {
-            return money;
+            return _money;
         }
         set
         {
-            money = value;
+            _money = value;
         }
     }
 
@@ -46,13 +45,13 @@ public class GameData
     {
         playerAttr = new PlayerAttribute();
         WeaponIDs = new int[WeaponSlot];
-        for(int i = 0; i < WeaponSlot; i++)
+        for (int i = 0; i < WeaponSlot; i++)
         {
             WeaponIDs[i] = -1;
         }
         ShopItemID = new int[ShopSlot];
         ShopItemType = new int[ShopSlot];
-        for(int i = 0;i < ShopSlot; i++)
+        for (int i = 0; i < ShopSlot; i++)
         {
             ShopItemType[i] = ShopItemID[i] = -1;
         }
@@ -64,6 +63,16 @@ public class GameData
     public void Init()
     {
         WeaponIDs[0] = 6; // 暂时默认获得一个武器，后续修改为初始自主选择
+    }
+
+    public bool HasItem(int id)
+    {
+        return ItemMap.ContainsKey(id);
+    }
+
+    public int HasItemCount(int id)
+    {
+        return ItemCount[ItemMap[id]];
     }
 
     public void OnGetItemByID(int id)
@@ -83,10 +92,10 @@ public class GameData
         if(curExp >= nextLevelExp)
         {
             curExp -= nextLevelExp;
-            nextLevelExp *= 2;
+            nextLevelExp += nextLevelExp / 2;
             curLevel++;
         }
-        UIManager.Instance.UpdatePlayerInfoShow();
+        EventCenter.Broadcast(EventDefine.RefreshPlayerAttribute);
     }
 
 }

@@ -11,9 +11,7 @@ using UnityEngine.UI;
 public class UIManager : ManagerBase<UIManager>
 {
     public Transform canvas;
-    // 关卡UI
-    public Text CurrentWave;                    // 当前波次
-    public Text CurrentWaveEnemyCount;         // 敌人计数
+    
 
     private Action EnemyNumberUpdate;   
     private Action GameOverUI;
@@ -28,6 +26,14 @@ public class UIManager : ManagerBase<UIManager>
     public GameObject ShopUI;
     public bool[] isLock = new bool[4];
 
+
+    // 关卡UI
+    public Text CurrentWave;                    // 当前波次
+    public Text CurrentWaveEnemyCount;         // 敌人计数
+    public GameObject CoinUI;
+    public GameObject WaveUI;               
+    public GameObject EnemyUI;                  
+
     // 角色信息显示
     public GameObject PlayerInfoShow;
     public GameObject NoticeInfoPrefab;
@@ -36,7 +42,8 @@ public class UIManager : ManagerBase<UIManager>
     {
         EventCenter.AddListener(EventDefine.ShowShopUI, ShowShopUI);
         EventCenter.AddListener(EventDefine.HideShopUI, HideShopUI);
-        EventCenter.AddListener(EventDefine.RefreshEnemyCount, RefreshEnemyCount);
+        EventCenter.AddListener(EventDefine.RefreshPlayerAttribute, UpdatePlayerInfoShow);
+        EventCenter.AddListener(EventDefine.RefreshEnemyCount, UpdateEnemy);
         EventCenter.AddListener<string>(EventDefine.ShowNoticeInfoUI, ShowNoticeInfoUI);
     }
 
@@ -44,7 +51,8 @@ public class UIManager : ManagerBase<UIManager>
     {
         EventCenter.RemoveListener(EventDefine.ShowShopUI, ShowShopUI);
         EventCenter.RemoveListener(EventDefine.HideShopUI, HideShopUI);
-        EventCenter.RemoveListener(EventDefine.RefreshEnemyCount, RefreshEnemyCount);
+        EventCenter.RemoveListener(EventDefine.RefreshPlayerAttribute, UpdatePlayerInfoShow);
+        EventCenter.RemoveListener(EventDefine.RefreshEnemyCount, UpdateEnemy);
         EventCenter.RemoveListener<string>(EventDefine.ShowNoticeInfoUI, ShowNoticeInfoUI);
     }
 
@@ -61,34 +69,29 @@ public class UIManager : ManagerBase<UIManager>
 
     private void ShowShopUI()
     {
+        Debug.Log("显示商店UI");
         ShopUI.SetActive(true);
         PlayerInfoShow.gameObject.SetActive(false);
-        CurrentWave.gameObject.SetActive(false);
-        CurrentWaveEnemyCount.gameObject.SetActive(false);
+        WaveUI.SetActive(false);
+        EnemyUI.SetActive(false);
     }
 
     private void HideShopUI()
     {
-        UpdateCurrentLevel();
+        Debug.Log("隐藏商店UI");
         ShopUI.SetActive(false);
         PlayerInfoShow.gameObject.SetActive(true);
         UpdatePlayerInfoShow();
-        CurrentWave.gameObject.SetActive(true);
-        CurrentWaveEnemyCount.gameObject.SetActive(true);
+        WaveUI.SetActive(true);
+        EnemyUI.SetActive(true);
+        UpdateCurrentLevel();
+        UpdateEnemy();
     }
 
     private void ShowNoticeInfoUI(string str)
     {
         GameObject go = Instantiate(NoticeInfoPrefab , canvas);
         go.GetComponent<NoticeInfoUI>().SetInfo(str);
-    }
-
-    private void RefreshEnemyCount()
-    {
-        if (EnemyNumberUpdate != null)
-        {
-            EnemyNumberUpdate();
-        }
     }
 
     // 更新武器伤害
@@ -110,19 +113,13 @@ public class UIManager : ManagerBase<UIManager>
 
     public void UpdateCurrentLevel()
     {
-        CurrentWave.text = "第 " + GameManager.Instance.gameData.CurrentWave + " 关";
+        CurrentWave.text = string.Format("第 {0} 关", GameManager.Instance.gameData.CurrentWave);
     }
 
     // 更新敌人数量
-    public void UpdateEnemyNumber(int num)
-    {
-        GameContext.number.res += num;
-        EnemyNumberUpdate += UpdateEnemy;
-    }
-
     private void UpdateEnemy()
     {
-        CurrentWaveEnemyCount.text = GameContext.number.res.ToString() + " / " + GameContext.number.total.ToString();
+        CurrentWaveEnemyCount.text = string.Format("{0} / {1}", GameContext.number.res, GameContext.number.total);
     }
 
     public void UpdatePlayerInfoShow()

@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -11,7 +10,7 @@ public class PlayerController : MonoBehaviour
     public GameObject Weapons;  // 所有已有的武器
     public bool isInit = false;
 
-    //private float mCurrentSecond = 0;
+    private float mCurrentSecond = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -45,7 +44,19 @@ public class PlayerController : MonoBehaviour
                     }
                 }
             }
-        }else
+            mCurrentSecond += Time.deltaTime;
+            if(mCurrentSecond >= 1f)
+            {
+                mCurrentSecond = 0;
+                #region 橙子效果
+                if (GameManager.Instance.gameData.HasItem((int)Item.橙子))
+                {
+                    GameManager.Instance.OnMoneyChange(GameManager.Instance.gameData.HasItemCount((int)Item.橙子));
+                }
+                #endregion
+            }
+        }
+        else
         {
             isInit = false;
         }

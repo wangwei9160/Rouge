@@ -11,7 +11,8 @@ public class PlayerAttribute
     public float magicDefend = 5;       // 法术抗性
     public float CriticalHitRate = 10;  // 暴击率
     public float CriticalDamage = 150;  // 暴击伤害
-    public float luck = 5;           // 幸运值
+    public float luck = 5;              // 幸运值
+    public int Revenues = 50;         // 回合收入
 
     public PlayerAttribute()
     {
@@ -23,6 +24,7 @@ public class PlayerAttribute
         CriticalHitRate= 10;
         CriticalDamage = 150;
         luck = 5;
+        Revenues = 50;
     }
 
     public float 最大生命值
@@ -71,6 +73,12 @@ public class PlayerAttribute
     {
         get { return luck; }
         set { luck = value; }
+    }
+
+    public int 回合收入
+    {
+        get { return Revenues; }
+        set { Revenues = Mathf.Max(0, value); }
     }
 
     private float ClampValue(float val , float min ,float max)

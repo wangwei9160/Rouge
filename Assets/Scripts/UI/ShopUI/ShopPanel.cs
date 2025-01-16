@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -56,6 +57,7 @@ public class ShopPanel : MonoBehaviour
     private void nextWave()
     {
         GameContext.number.res = 0;
+        EventCenter.Broadcast(EventDefine.RefreshEnemyCount);
         GameManager.Instance.TransState(StateID.FightState);
         GameManager.Instance.gameData.CurrentWave += 1;
         EventCenter.Broadcast(EventDefine.HideShopUI);
@@ -83,25 +85,39 @@ public class ShopPanel : MonoBehaviour
 
     public void RefreshAllShopItem()
     {
-        for(int i = 0; i < 4; i++)
+
+        var p1 = Constants.GetWeaponOrItemProbabilityByLevel(GameDataInstance.curLevel);
+        var p2 = Constants.GetRankTypeProbabilityByLevel(GameDataInstance.curLevel);
+        for(int i = 0; i < GameDataInstance.ShopSlot; i++)
         {
             GameObject go = ScrollViewContent.transform.GetChild(i).gameObject;
             GameObject item = go.transform.GetChild(0).gameObject;
-            int WeaponOrItem = Random.Range(0, 1+1);
-            if(WeaponOrItem == 0)
+            int WeaponOrItem = RandomUtil.RandomIndexWithProbablity(p1);
+            int RankType = RandomUtil.RandomIndexWithProbablity(p2);
+            if (WeaponOrItem == 1)
             {
-                int rd = Random.Range(1, 10 + 1);
-                WeaponTplInfo info = TplUtil.GetWeaponTplDic()[rd];
-                go.name = string.Format("weapon-{0}-{1}", info.ID, info.Name);
-                item.GetComponent<BuyItemScript>().ResetWeapon(info);
-            }else
-            {
-                int rd = Random.Range(1, 9 + 1);
+                // 道具
+                List<int> itemList = TplUtil.GetItemTplDic().Values
+                    .Where(obj => obj.Rank == RankType)
+                    .Select(obj => obj.ID)
+                    .ToList();
+                int rd = RandomUtil.GetRandomValueInList(itemList);
                 ItemTplInfo info = TplUtil.GetItemTplDic()[rd];
                 go.name = string.Format("item-{0}-{1}", info.ID, info.Name);
                 item.GetComponent<BuyItemScript>().ResetItem(info);
+
+            }else if (WeaponOrItem == 0)
+            {
+                // 武器
+                List<int> weaponList = TplUtil.GetWeaponTplDic().Values
+                    .Where(obj => obj.Rank == RankType )
+                    .Select(obj => obj.ID)
+                    .ToList();
+                int rd = RandomUtil.GetRandomValueInList(weaponList);
+                WeaponTplInfo info = TplUtil.GetWeaponTplDic()[rd];
+                go.name = string.Format("weapon-{0}-{1}", info.ID, info.Name);
+                item.GetComponent<BuyItemScript>().ResetWeapon(info);
             }
-            
             item.SetActive(true);// 确保刷新出来
         }
     }

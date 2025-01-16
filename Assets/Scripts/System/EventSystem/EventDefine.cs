@@ -11,6 +11,7 @@ public enum EventDefine
     RefreshWeapon,
     RefreshItem,
     RefreshEnemyCount,
+    RefreshPlayerAttribute,
     
 
 }

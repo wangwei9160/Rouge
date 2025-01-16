@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class NoticeInfoUI : MonoBehaviour 
 {
@@ -10,7 +7,6 @@ public class NoticeInfoUI : MonoBehaviour
     public Text message;
 
     public float mCurrentSecond = 0;
-    public float startTime = 0.3f;
     public float speed = 40f;
     public float fadeDuration = 2f;
 
@@ -24,26 +20,23 @@ public class NoticeInfoUI : MonoBehaviour
     {
         mCurrentSecond += Time.deltaTime;
 
-        if (mCurrentSecond >= startTime)
+        float fadeProgress = mCurrentSecond / fadeDuration;
+        fadeProgress = Mathf.Clamp01(fadeProgress);
+        if (fadeProgress >= 0.8f)
         {
-            float fadeProgress = (mCurrentSecond - startTime) / fadeDuration;
-            fadeProgress = Mathf.Clamp01(fadeProgress);
-            if(fadeProgress >= 0.8f)
-            {
-                Destroy(gameObject);
-                return;
-            }
-            foreach (var item in images)
-            {
-                Color color = item.color;
-                color.a = 1 - fadeProgress;
-                item.color = color;
-            }
-            var c = message.color;
-            c.a = 1 - fadeProgress;
-            message.color = c;
-            gameObject.transform.position += new Vector3(0, speed * Time.deltaTime , 0);
+            Destroy(gameObject);
+            return;
         }
+        foreach (var item in images)
+        {
+            Color color = item.color;
+            color.a = 1 - fadeProgress;
+            item.color = color;
+        }
+        var c = message.color;
+        c.a = 1 - fadeProgress;
+        message.color = c;
+        gameObject.transform.position += new Vector3(0, speed * Time.deltaTime, 0);
     }
     public void SetInfo(string info)
     {

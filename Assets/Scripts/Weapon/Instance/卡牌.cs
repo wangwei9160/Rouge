@@ -4,6 +4,7 @@ public class ¿¨ÅÆ : BaseWeapon
 {
     public float ±¶ÂÊ = 0.5f;
 
+
     public override float attack => weaponInfo.Attack;
     public override float attackSpeed => weaponInfo.AttackSpeed;    // ¹¥»÷¼ä¸ô
 

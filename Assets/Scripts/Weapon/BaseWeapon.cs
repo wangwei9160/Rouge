@@ -13,7 +13,7 @@ public class BaseWeapon : MonoBehaviour
         this.ID = id;
     }
 
-    protected WeaponRank type = WeaponRank.Unknown;
+    protected RankType type = RankType.Unknown;
 
     protected WeaponTplInfo weaponInfo
     {
@@ -32,7 +32,9 @@ public class BaseWeapon : MonoBehaviour
 
     protected virtual void Awake() { }
 
-    protected virtual void Start() { }
+    protected virtual void Start()
+    {
+    }
 
     
 
@@ -43,8 +45,16 @@ public class BaseWeapon : MonoBehaviour
         if(mCurrentSecond > attackSpeed)
         {
             mCurrentSecond = 0;
-            Attack();
+            StartCoroutine(WaitForAttack());
+            //Attack();
         }
+    }
+
+    IEnumerator WaitForAttack()
+    {
+        float t = Random.Range(0f , 0.1f);
+        yield return new WaitForSeconds(t);
+        Attack();
     }
 
     protected virtual void Attack() { }

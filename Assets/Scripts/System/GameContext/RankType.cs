@@ -1,6 +1,6 @@
-// 武器稀有度
+// 稀有度
 
-public enum WeaponRank
+public enum RankType
 {
     Unknown = -1,
     Base,

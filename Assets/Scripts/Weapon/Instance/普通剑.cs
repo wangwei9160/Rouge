@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -22,4 +23,5 @@ public class ∆’Õ®Ω£ : BaseWeapon
         tmp.GetComponent<BallController>().SetMoveToTarget(gameObject,tg);
         tmp.GetComponent<BallController>().ResetInfo(attack , "∆’Õ®Ω£");
     }
+
 }

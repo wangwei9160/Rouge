@@ -73,6 +73,8 @@ public class EnemyGenerator : ManagerBaseWithoutPersist<EnemyGenerator>
                 {
                     StartCoroutine(DieAction(item));
                     tmp.ChangeStatus(6);
+                    GameContext.number.res += 1;
+                    EventCenter.Broadcast(EventDefine.RefreshEnemyCount);
                     GameManager.Instance.gameData.GetExp(10);
                     toRemove.Add(item);
                 }

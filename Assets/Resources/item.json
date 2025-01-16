@@ -2,7 +2,7 @@
   {
     "ID": 1,
     "Name": "红苹果",
-    "Rank": 1,
+    "Rank": 0,
     "Description": "获得<color=\"#38b48b\">5</color>点<color=\"#20C320\"></color>最大生命值",
     "Price": 40,
     "Index" : 0,
@@ -11,7 +11,7 @@
   {
     "ID": 2,
     "Name": "绿苹果",
-    "Rank": 1,
+    "Rank": 0,
     "Description": "获得<color=\"#00a497\">10</color>点<color=\"#20C320\"></color>最大生命值",
     "Price": 50,
     "Index" : 1,
@@ -20,8 +20,8 @@
   {
     "ID": 3,
     "Name": "橙子",
-    "Rank": 1,
-    "Description": "获得<color=\"#e6b422\">10</color>枚<color=\"#C36220\"></color>金币",
+    "Rank": 0,
+    "Description": "战斗中每秒获得<color=\"#e6b422\">1</color>枚<color=\"#C36220\"></color>金币",
     "Price": 50,
     "Index" : 2,
     "MaxOwnCount": 0

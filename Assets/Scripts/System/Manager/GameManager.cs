@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 
 public class GameManager : ManagerBase<GameManager>
@@ -33,6 +34,7 @@ public class GameManager : ManagerBase<GameManager>
                 if (GameContext.number.res == GameContext.number.total)
                 {
                     TransState(StateID.ShopState);
+                    OnMoneyChange(gameData.playerAttr.Revenues); // 每回合固定收入
                     EventCenter.Broadcast(EventDefine.ShowShopUI);
                 }
             }
@@ -60,12 +62,45 @@ public class GameManager : ManagerBase<GameManager>
         }
     }
 
-    public void BuyItemByID(int id)
+    public void OnMoneyChange(int money_)
+    {
+        if(money_ < 0)
+        {
+            gameData.Cost -= money_;
+        }
+        gameData.money += money_;
+        EventCenter.Broadcast(EventDefine.RefreshPlayerAttribute);
+    }
+
+    private bool TryPayMoney(int money_)
+    {
+        if(gameData.money < money_)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    public bool HasItem(int id)
+    {
+        return gameData.HasItem(id);
+    }
+
+    public bool BuyItemByID(int id)
     {
         //Debug.Log(TplUtil.GetItemTplDic()[id].Name);
+        
+        int needMoney = TplUtil.GetItemTplDic()[id].Price;
+        if (!TryPayMoney(needMoney))
+        {
+            EventCenter.Broadcast(EventDefine.ShowNoticeInfoUI, "当前金币不足");
+            return false;
+        }
+        OnMoneyChange( -1 * needMoney);
         ItemFactory.GetItemByID(id).OnGet();
         gameData.OnGetItemByID(id);
         EventCenter.Broadcast(EventDefine.RefreshItem);
+        return true;
     }
 
     public bool BuyWeaponByID(int id)
@@ -87,10 +122,23 @@ public class GameManager : ManagerBase<GameManager>
                 return false;
             }else
             {
+                int needMoney = TplUtil.GetWeaponTplDic()[id].Price;
+                if (!TryPayMoney(needMoney))
+                {
+                    EventCenter.Broadcast(EventDefine.ShowNoticeInfoUI, "当前金币不足");
+                    return false;
+                }
                 gameData.WeaponIDs[idx] = weapon.Next;
             }
         }else
         {
+            int needMoney = TplUtil.GetWeaponTplDic()[id].Price;
+            if (!TryPayMoney(needMoney))
+            {
+                EventCenter.Broadcast(EventDefine.ShowNoticeInfoUI, "当前金币不足");
+                return false;
+            }
+            OnMoneyChange( -1 * needMoney);
             gameData.WeaponIDs[idx] = id;
         }
         EventCenter.Broadcast(EventDefine.RefreshWeapon);
