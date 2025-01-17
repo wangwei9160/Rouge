@@ -6,7 +6,7 @@ public abstract class ManagerBase<T> : MonoBehaviour where T : MonoBehaviour
 
     protected virtual void Awake()
     {
-        if(Instance != null)
+        if (Instance != null)
         {
             Destroy(Instance);
         }else

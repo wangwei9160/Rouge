@@ -31,7 +31,8 @@ public class BallController : Ö±Ïß·ÉÐÐ
         //Debug.Log(other.gameObject.tag);
         if (other.gameObject.CompareTag("Enemy") && isAlive)
         {
-            bool ok = other.gameObject.GetComponent<MonsterController>().Damge(damage);
+            //bool ok = other.gameObject.GetComponent<MonsterController>().Damge(damage);
+            bool ok = other.gameObject.GetComponent<BaseEnemy>().Damage(damage);
             if (!ok) return;
             isAlive = false;
             Destroy(gameObject);

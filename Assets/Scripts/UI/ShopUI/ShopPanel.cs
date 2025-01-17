@@ -56,10 +56,11 @@ public class ShopPanel : MonoBehaviour
     // обр╩╧ь
     private void nextWave()
     {
-        GameContext.number.res = 0;
+        GameManager.Instance.gameData.CurrentWave += 1;
+        GameContext.CurrentWaveKill = 0;
+        GameContext.CurrentWaveCount = GameManager.Instance.WaveDic[GameManager.Instance.gameData.CurrentWave].Total;
         EventCenter.Broadcast(EventDefine.RefreshEnemyCount);
         GameManager.Instance.TransState(StateID.FightState);
-        GameManager.Instance.gameData.CurrentWave += 1;
         EventCenter.Broadcast(EventDefine.HideShopUI);
     }
 

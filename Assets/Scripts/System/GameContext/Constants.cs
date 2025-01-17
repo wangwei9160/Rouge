@@ -3,6 +3,10 @@ using Unity.Burst.Intrinsics;
 
 public class Constants
 {
+    public static int ENDLESS_WAVE = 20;
+    public static int[] NORLMAL_WAVE = new int[] { 21, 22, 23 };
+    public static int ONE_BOSS_WAVE = 24;
+
     // 商店刷新武器和道具的概率
     public static List<LevelProbability> WeaponOrItemProbability = new List<LevelProbability>
     {

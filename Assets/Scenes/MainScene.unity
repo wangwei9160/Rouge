@@ -281,7 +281,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &117670519
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2291,7 +2291,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2087500497}
-  - component: {fileID: 2087500496}
+  - component: {fileID: 2087500498}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2299,43 +2299,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2087500496
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2087500495}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d23e84dcef06ddd458a4df3df9b49efb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  state: 2
-  gameData:
-    ShopSlot: 4
-    WeaponSlot: 6
-    CurrentWave: 1
-    playerAttr:
-      maxHp: 100
-      attackPower: 10
-      attackSpeed: 100
-      defend: 5
-      magicDefend: 5
-      CriticalHitRate: 10
-      CriticalDamage: 150
-      luck: 5
-    WeaponIDs: 06000000ffffffffffffffffffffffffffffffffffffffff
-    ItemIDs: 
-    ItemCount: 
-    ShopItemID: ffffffffffffffffffffffffffffffff
-    ShopItemType: ffffffffffffffffffffffffffffffff
-    curLevel: 1
-    curExp: 0
-    nextLevelExp: 100
-    curHp: 100
-    Cost: 0
-  isLoadAsset: 0
 --- !u!4 &2087500497
 Transform:
   m_ObjectHideFlags: 0
@@ -2351,6 +2314,44 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2087500498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2087500495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d23e84dcef06ddd458a4df3df9b49efb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: 1
+  gameData:
+    ShopSlot: 4
+    WeaponSlot: 6
+    CurrentWave: 1
+    playerAttr:
+      maxHp: 100
+      attackPower: 10
+      attackSpeed: 100
+      defend: 5
+      magicDefend: 5
+      CriticalHitRate: 10
+      CriticalDamage: 150
+      luck: 5
+      Revenues: 50
+    WeaponIDs: ffffffffffffffffffffffffffffffffffffffffffffffff
+    ItemIDs: 
+    ItemCount: 
+    ShopItemID: ffffffffffffffffffffffffffffffff
+    ShopItemType: ffffffffffffffffffffffffffffffff
+    curLevel: 1
+    curExp: 0
+    nextLevelExp: 100
+    curHp: 100
+    Cost: 0
+  isLoadAsset: 0
 --- !u!224 &44996880822888523
 RectTransform:
   m_ObjectHideFlags: 0

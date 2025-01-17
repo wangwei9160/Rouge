@@ -66,6 +66,18 @@ public class TplUtil
         return GetTplDic<WeaponTpl, WeaponTplInfo>();
     }
 
+    public static Dictionary<int, EnemyTplInfo> GetEnemyTplDic()
+    {
+        return GetTplDic<EnemyTpl, EnemyTplInfo>();
+    }
+
+    public static Dictionary<int, WaveTplInfo> GetWaveTplDic()
+    {
+        return GetTplDic<WaveTpl, WaveTplInfo>();
+    }
+
+    
+
     //public static Dictionary<int , ItemTplInfo> GetItemTplDic()
     //{
     //    if (!singletons.ContainsKey(typeof(ItemTpl)))

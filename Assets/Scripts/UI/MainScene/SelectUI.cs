@@ -11,9 +11,23 @@ public class SelectUI : MonoBehaviour
 
     public GameObject WeaponSelect;
 
+    private void Awake()
+    {
+        RefreshWeapon();
+    }
+
+    private void OnEnable()
+    {
+        EventCenter.AddListener(EventDefine.RefreshWeapon, RefreshWeapon);
+    }
+
+    private void OnDisable()
+    {
+        EventCenter.RemoveListener(EventDefine.RefreshWeapon, RefreshWeapon);
+    }
+
     private void Start()
     {
-        Weapon.GetComponent<WeaponButtonUI>().SetUI(GameManager.Instance.gameData.WeaponIDs[0]);
         WeaponSelect.SetActive(false);
         Weapon.onClick.AddListener(() =>
         {
@@ -22,6 +36,7 @@ public class SelectUI : MonoBehaviour
         });
         StartGame.onClick.AddListener(() =>
         {
+            EventCenter.Broadcast(EventDefine.StartGame);
             SceneManager.LoadScene("BattleScene");
         });
         Back2Main.onClick.AddListener(() =>
@@ -30,8 +45,9 @@ public class SelectUI : MonoBehaviour
         });
     }
 
-    private void Update()
+    private void RefreshWeapon()
     {
         Weapon.GetComponent<WeaponButtonUI>().SetUI(GameManager.Instance.gameData.WeaponIDs[0]);
     }
+
 }

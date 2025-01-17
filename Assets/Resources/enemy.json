@@ -1,0 +1,22 @@
+﻿[
+  {
+    "ID": 1,
+    "Name": "近战公牛",
+    "Description": "近战敌人",
+    "Hp": 9,
+    "Attack": 5,
+    "Defend": 0,
+    "Speed": 100,
+    "Exp": 10
+  },
+  {
+    "ID": 2,
+    "Name": "远程公牛",
+    "Description": "远程敌人",
+    "Hp": 20,
+    "Attack": 20,
+    "Defend": 0,
+    "Speed": 50,
+    "Exp": 15
+  }
+]

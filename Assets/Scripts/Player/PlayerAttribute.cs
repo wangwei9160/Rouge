@@ -12,7 +12,7 @@ public class PlayerAttribute
     public float CriticalHitRate = 10;  // 暴击率
     public float CriticalDamage = 150;  // 暴击伤害
     public float luck = 5;              // 幸运值
-    public int Revenues = 50;         // 回合收入
+    public int Revenues = 50;           // 回合收入
 
     public PlayerAttribute()
     {

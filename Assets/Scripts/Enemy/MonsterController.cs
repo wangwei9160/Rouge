@@ -23,21 +23,15 @@ public class MonsterController : MonoBehaviour
         private set { status = value; }
     }
 
-    public void ChangeStatus(int value)
-    {
-        status = value;
-        if(value == 6)
-        {
-            ChangeAnimation("Death");
-        }
-    }
-
     private float attackRange = 3f;
     private Animator animator;
     private string currentAnimation = "";
 
     private float MaxHealthValue => 19f + 5 * (GameManager.Instance.gameData.CurrentWave - 1) + 10 * (GameManager.Instance.gameData.curLevel - 1);
     private float healthValue;
+
+    public int Exp = 10;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -56,9 +50,16 @@ public class MonsterController : MonoBehaviour
 
     private void StatusChange()
     {
+        if(status == 5) // “—À¿Õˆ
+        {
+            return;
+        }
         if (healthValue < 0)
         {
             status = 5;
+            ChangeAnimation("Death");
+            //Debug.Log("Broadcast , (EventDefine.OneEnemyDeath");
+            EventCenter.Broadcast(EventDefine.OneEnemyDeath, gameObject);
             return;
         }
 
@@ -123,5 +124,7 @@ public class MonsterController : MonoBehaviour
             animator.CrossFade(animation , crossfade);
         }
     }
+
+
 
 }

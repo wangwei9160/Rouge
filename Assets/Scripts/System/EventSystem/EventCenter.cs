@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 
 public static class EventCenter
@@ -12,7 +13,7 @@ public static class EventCenter
     {
         if(!m_Event.ContainsKey(eventType))
         {
-            m_Event.Add(eventType, del);
+            m_Event.Add(eventType, null);
         }
         Delegate d = m_Event[eventType];
         if(d != null && d.GetType() != del.GetType())

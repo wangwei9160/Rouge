@@ -59,7 +59,6 @@ public class UIManager : ManagerBase<UIManager>
     void Start()
     {
         ShopUI.SetActive(false);
-        GameContext.number = new EnemyNumber(0, 7);
         DamageCountUIButton.onClick.AddListener(() =>
         {
             DamageCount.SetActive(!DamageCount.activeInHierarchy);
@@ -69,7 +68,7 @@ public class UIManager : ManagerBase<UIManager>
 
     private void ShowShopUI()
     {
-        Debug.Log("显示商店UI");
+        //Debug.Log("显示商店UI");
         ShopUI.SetActive(true);
         PlayerInfoShow.gameObject.SetActive(false);
         WaveUI.SetActive(false);
@@ -78,7 +77,7 @@ public class UIManager : ManagerBase<UIManager>
 
     private void HideShopUI()
     {
-        Debug.Log("隐藏商店UI");
+        //Debug.Log("隐藏商店UI");
         ShopUI.SetActive(false);
         PlayerInfoShow.gameObject.SetActive(true);
         UpdatePlayerInfoShow();
@@ -119,7 +118,7 @@ public class UIManager : ManagerBase<UIManager>
     // 更新敌人数量
     private void UpdateEnemy()
     {
-        CurrentWaveEnemyCount.text = string.Format("{0} / {1}", GameContext.number.res, GameContext.number.total);
+        CurrentWaveEnemyCount.text = string.Format("{0} / {1}", GameContext.CurrentWaveKill, GameContext.CurrentWaveCount);
     }
 
     public void UpdatePlayerInfoShow()

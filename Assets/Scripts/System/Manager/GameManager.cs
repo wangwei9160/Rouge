@@ -7,17 +7,43 @@ using UnityEngine.TextCore.Text;
 
 public class GameManager : ManagerBase<GameManager>
 {
-    public StateID state = StateID.FightState;
+    public StateID state = StateID.ReadyState;
 
     public GameData gameData;   // 游戏数据
     public bool isLoadAsset = false;
+
+    // 波次信息
+    private Dictionary<int, WaveTplInfo> _waveDic;
+    public Dictionary<int, WaveTplInfo> WaveDic
+    {
+        get
+        {
+            if(_waveDic == null)
+            {
+                _waveDic = TplUtil.GetWaveTplDic();
+            }
+            return _waveDic;
+        }
+    }
+
+    private void OnEnable()
+    {
+        //Debug.Log("AddListener EventDefine.StartGame");
+        EventCenter.AddListener(EventDefine.StartGame, DoBeforStartGame);
+    }
+
+    private void OnDisable()
+    {
+        //Debug.Log("RemoveListener EventDefine.StartGame");
+        EventCenter.RemoveListener(EventDefine.StartGame, DoBeforStartGame);
+    }
 
     private void Start()
     {
         gameData = new GameData();
         gameData.Init();
+        
     }
-
 
     void Update()
     {
@@ -26,19 +52,29 @@ public class GameManager : ManagerBase<GameManager>
             isLoadAsset = true;
             StartCoroutine(LoadAsset());
         }
-        if(GameContext.number != null)
+        if(state == StateID.FightState)
         {
-            //Debug.Log(GameContext.number.res + " " + GameContext.number.total);
-            if(state == StateID.FightState)
+            if(GameContext.CurrentWaveKill == GameContext.CurrentWaveCount)
             {
-                if (GameContext.number.res == GameContext.number.total)
-                {
-                    TransState(StateID.ShopState);
-                    OnMoneyChange(gameData.playerAttr.Revenues); // 每回合固定收入
-                    EventCenter.Broadcast(EventDefine.ShowShopUI);
-                }
+                CurrentWaveFinish();
             }
         }
+    }
+
+    public void DoBeforStartGame()
+    {
+        GameContext.CurrentWaveKill = 0;
+        GameContext.CurrentWaveCount = WaveDic[gameData.CurrentWave].Total;
+        
+        //Debug.Log(string.Format("{0} , {1} / {2}", gameData.CurrentWave, GameContext.CurrentWaveKill , GameContext.CurrentWaveCount));
+        TransState(StateID.FightState);
+    }
+
+    public void CurrentWaveFinish()
+    {
+        TransState(StateID.ShopState);
+        OnMoneyChange(gameData.playerAttr.Revenues); // 每回合固定收入
+        EventCenter.Broadcast(EventDefine.ShowShopUI);
     }
 
     public IEnumerator LoadAsset()
