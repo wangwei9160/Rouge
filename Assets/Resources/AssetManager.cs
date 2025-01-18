@@ -17,8 +17,10 @@ public class AssetManager : ScriptableObject
         }
     }
 
-    public List<Sprite> itemSprite;
-    public List<Sprite> RankSprite;
-    public List<GameObject> WeaponPrefabs;
-    public List<Sprite> WeaponForShowSprite;
+    public List<Sprite> itemSprite;             // 物品图片
+    public List<Sprite> RankSprite;             // 武器等级
+    public List<GameObject> WeaponPrefabs;      // 武器预制体
+    public List<Sprite> WeaponForShowSprite;    // 武器图片
+
+    public GameObject SaveFileDataTpl;          // 存档模板
 }

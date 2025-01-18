@@ -61,7 +61,7 @@ public class BaseEnemy : MonoBehaviour
         float upRateLow = (float)Math.Exp(0.01 * (GameManager.Instance.gameData.CurrentWave - 1));
         attr.攻击力 = Info.Attack * upRate;
         attr.防御 = Info.Defend * upRate;
-        attr.经验值 = Info.Exp * upRate;
+        attr.经验值 = Info.Exp;
         attr.移动速度 = Math.Min(Info.Speed / 100 * upRateLow , 2f);
         maxHp = Info.Hp + 10 * (GameManager.Instance.gameData.CurrentWave - 1) + 20 * (GameManager.Instance.gameData.curLevel - 1);
         curHp = maxHp;
@@ -72,7 +72,7 @@ public class BaseEnemy : MonoBehaviour
     {
         status = 5;
         ChangeAnimation("Death");
-        Debug.Log("Go Death");
+        //Debug.Log("Go Death");
         EventCenter.Broadcast(EventDefine.OneEnemyDeath, gameObject);
     }
 

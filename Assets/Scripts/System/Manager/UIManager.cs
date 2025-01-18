@@ -11,10 +11,6 @@ using UnityEngine.UI;
 public class UIManager : ManagerBase<UIManager>
 {
     public Transform canvas;
-    
-
-    private Action EnemyNumberUpdate;   
-    private Action GameOverUI;
 
     // ÎäÆ÷ÉËº¦Ïà¹ØUI
     public Button DamageCountUIButton;

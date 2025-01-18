@@ -6,6 +6,10 @@ public enum EventDefine
     GameOver,
 
     // 显示隐藏界面
+    ShowMainScene,  // 初始界面
+    HideMainScene,  // 关闭
+    ShowDataFileUI, // 存档界面
+    HideDataFileUI, // 关闭
     ShowSelectUI,   // 打开初始选择界面
     HideSelectUI,   // 关闭
     ShowShopUI,

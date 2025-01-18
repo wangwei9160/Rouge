@@ -30,3 +30,4 @@ MonoBehaviour:
   WeaponForShowSprite:
   - {fileID: 21300000, guid: feb0968e273d1314cb1402497643fd4b, type: 3}
   - {fileID: 21300000, guid: 608ebeb67dfd0f34d97dc9060b0030d4, type: 3}
+  SaveFileDataTpl: {fileID: 6613480771881419670, guid: 42709957bb3b79c45816f280635a79d3, type: 3}

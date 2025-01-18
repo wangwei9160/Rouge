@@ -3,6 +3,8 @@ using Unity.Burst.Intrinsics;
 
 public class Constants
 {
+    public static int FILEDATA_SLOT_MAX = 10;
+
     public static int ENDLESS_WAVE = 20;
     public static int[] NORLMAL_WAVE = new int[] { 21, 22, 23 };
     public static int ONE_BOSS_WAVE = 24;

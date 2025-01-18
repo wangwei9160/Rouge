@@ -17,10 +17,25 @@ public class WeaponInfoUI : MonoBehaviour
     public Button CloseButton;          // 关闭按钮
     public int ID;                      // 物品编号
     public int Index;                   // 索引
+    public Button CloseButton2;         // 点击周围关闭 
+
+    public void OnEnable()
+    {
+        CloseButton2.gameObject.SetActive(true);
+    }
+
+    public void OnDisable()
+    {
+        CloseButton2.gameObject.SetActive(false);
+    }
 
     private void Start()
     {
         CloseButton.onClick.AddListener(() =>
+        {
+            Hide();
+        });
+        CloseButton2.onClick.AddListener(() =>
         {
             Hide();
         });
@@ -45,6 +60,7 @@ public class WeaponInfoUI : MonoBehaviour
     private void Hide()
     {
         gameObject.SetActive(false);
+        CloseButton2.gameObject.SetActive(false);
     }
 
     // 用于设置一些参数

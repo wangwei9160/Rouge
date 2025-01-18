@@ -13,22 +13,20 @@ public class SelectUI : MonoBehaviour
 
     private void Awake()
     {
-        RefreshWeapon();
-    }
-
-    private void OnEnable()
-    {
+        EventCenter.AddListener(EventDefine.ShowSelectUI , Show) ;
+        EventCenter.AddListener(EventDefine.HideSelectUI, Hide);
         EventCenter.AddListener(EventDefine.RefreshWeapon, RefreshWeapon);
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
+        EventCenter.RemoveListener(EventDefine.ShowSelectUI, Show);
+        EventCenter.RemoveListener(EventDefine.HideSelectUI, Hide);
         EventCenter.RemoveListener(EventDefine.RefreshWeapon, RefreshWeapon);
     }
 
     private void Start()
     {
-        WeaponSelect.SetActive(false);
         Weapon.onClick.AddListener(() =>
         {
             //Debug.Log("ÌôÑ¡ÎäÆ÷");
@@ -36,18 +34,31 @@ public class SelectUI : MonoBehaviour
         });
         StartGame.onClick.AddListener(() =>
         {
-            EventCenter.Broadcast(EventDefine.StartGame);
-            SceneManager.LoadScene("BattleScene");
+            EventCenter.Broadcast<int>(EventDefine.ShowDataFileUI, 0);
+            //EventCenter.Broadcast(EventDefine.StartGame);
+            //SceneManager.LoadScene("BattleScene");
         });
         Back2Main.onClick.AddListener(() =>
         {
-            EventCenter.Broadcast(EventDefine.HideSelectUI);
+            Hide();
+            EventCenter.Broadcast(EventDefine.ShowMainScene);
         });
+        WeaponSelect.SetActive(false);
+        Hide();
     }
 
     private void RefreshWeapon()
     {
         Weapon.GetComponent<WeaponButtonUI>().SetUI(GameManager.Instance.gameData.WeaponIDs[0]);
+    }
+
+    private void Show()
+    {
+        gameObject.SetActive(true); 
+    }
+    private void Hide()
+    {
+        gameObject.SetActive(false);
     }
 
 }
