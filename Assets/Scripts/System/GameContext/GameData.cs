@@ -7,8 +7,8 @@ public class GameData
 {
 
     // 存档数据
-
     public int SaveIndex = -1;
+    public float playTime = 0f;
 
     public int ShopSlot = 4;                // 商店槽位
     public int WeaponSlot = 6;              // 武器槽位

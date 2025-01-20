@@ -36,7 +36,7 @@ public class DataFileUI : MonoBehaviour
             }
             Hide();
         });
-        //Init();
+        Init();
         Hide();
     }
 

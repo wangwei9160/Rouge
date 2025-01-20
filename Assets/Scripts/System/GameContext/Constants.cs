@@ -3,6 +3,8 @@ using Unity.Burst.Intrinsics;
 
 public class Constants
 {
+    public static string PLAYERPREFES = "data-";
+
     public static int FILEDATA_SLOT_MAX = 10;
 
     public static int ENDLESS_WAVE = 20;

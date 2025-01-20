@@ -48,6 +48,10 @@ public class GameManager : ManagerBase<GameManager>
 
     void Update()
     {
+        if(gameData.SaveIndex != -1)
+        {
+            gameData.playTime += Time.deltaTime;
+        }
         if (!isLoadAsset)
         {
             isLoadAsset = true;
@@ -76,7 +80,9 @@ public class GameManager : ManagerBase<GameManager>
         TransState(StateID.ShopState);
         OnMoneyChange(gameData.playerAttr.Revenues); // 每回合固定收入
         EventCenter.Broadcast(EventDefine.ShowShopUI);
+        // 存档
         SaveGameData(gameData.SaveIndex);
+        OverridePlayerPrefsData(gameData.SaveIndex);
     }
 
     public IEnumerator LoadAsset()
@@ -272,6 +278,7 @@ public class GameManager : ManagerBase<GameManager>
     #endregion
 
     #region SaveOrLoad 
+    // 保存或者加载
     public void SaveOrLoadData(bool isLoad , int idx)
     {
         StartCoroutine(LoadScene(isLoad, idx));
@@ -282,6 +289,7 @@ public class GameManager : ManagerBase<GameManager>
         if (isLoad)
         {
             LoadGameData(idx);
+            SaveDataByPlayerPrefs(idx);
             state = StateID.ShopState;
             AsyncOperation t = SceneManager.LoadSceneAsync("BattleScene");
             while (!t.isDone)
@@ -294,6 +302,7 @@ public class GameManager : ManagerBase<GameManager>
         else
         {
             SaveGameData(idx);
+            SaveDataByPlayerPrefs(idx);
             state = StateID.FightState;
             var t = SceneManager.LoadSceneAsync("BattleScene");
             while (!t.isDone)
@@ -321,7 +330,69 @@ public class GameManager : ManagerBase<GameManager>
             Debug.LogError(e.Message);
         }
     }
-    
+
+    // 保存用于显示的数据，通过PlayerPrefs
+    public void SaveDataByPlayerPrefs(int Idx)
+    {
+        FileShowData data = new FileShowData(gameData);
+        string jsonData = JsonUtility.ToJson(data);
+        PlayerPrefs.SetString(string.Format("{0}-{1}", Constants.PLAYERPREFES, Idx), jsonData);
+        PlayerPrefs.Save();
+    }
+
+    public FileShowData LoadPlayerPrefsData(int Idx)
+    {
+        string key = string.Format("{0}-{1}", Constants.PLAYERPREFES, Idx);
+        if (PlayerPrefs.HasKey(key))
+        {
+            string json = PlayerPrefs.GetString(key);
+            return JsonUtility.FromJson<FileShowData>(json);
+        }
+        return null;
+    }
+
+    public void ClearGameData(int Idx)
+    {
+        try
+        {
+            string path = Application.persistentDataPath + string.Format("/SaveData{0}.data", Idx);
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+                Debug.Log(string.Format("{0} 已删除", path));
+            }else
+            {
+                Debug.LogError(string.Format("{0} 未找到", path));
+            }
+            string key = string.Format("{0}-{1}", Constants.PLAYERPREFES, Idx);
+            if (PlayerPrefs.HasKey(key))
+            {
+                PlayerPrefs.DeleteKey(key);
+                PlayerPrefs.Save();
+                Debug.Log(string.Format("{0} 已删除", key));
+            }
+            else
+            {
+                Debug.LogError(string.Format("{0} 未找到", key));
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("删除数据异常" + e.Message); ;
+        }
+    }
+
+    // 覆盖保存的用于显示的数据，通过PlayerPrefs
+    public void OverridePlayerPrefsData(int Idx)
+    {
+        FileShowData data = LoadPlayerPrefsData(Idx);
+        data.Set(gameData);
+        string jsonData = JsonUtility.ToJson(data);
+        Debug.Log(jsonData);
+        PlayerPrefs.SetString(string.Format("{0}-{1}", Constants.PLAYERPREFES, Idx), jsonData);
+        PlayerPrefs.Save();
+    }
+
     // 读档
     public void LoadGameData(int Idx)
     {
