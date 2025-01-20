@@ -1,7 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.TextCore.Text;
 
 
@@ -41,8 +44,6 @@ public class GameManager : ManagerBase<GameManager>
     private void Start()
     {
         gameData = new GameData();
-        gameData.Init();
-        
     }
 
     void Update()
@@ -75,6 +76,7 @@ public class GameManager : ManagerBase<GameManager>
         TransState(StateID.ShopState);
         OnMoneyChange(gameData.playerAttr.Revenues); // 每回合固定收入
         EventCenter.Broadcast(EventDefine.ShowShopUI);
+        SaveGameData(gameData.SaveIndex);
     }
 
     public IEnumerator LoadAsset()
@@ -122,6 +124,8 @@ public class GameManager : ManagerBase<GameManager>
         return gameData.HasItem(id);
     }
 
+    #region 商店逻辑
+
     public bool BuyItemByID(int id)
     {
         //Debug.Log(TplUtil.GetItemTplDic()[id].Name);
@@ -142,17 +146,17 @@ public class GameManager : ManagerBase<GameManager>
     public bool BuyWeaponByID(int id)
     {
         //Debug.Log(TplUtil.GetWeaponTplDic()[id].Name);
-        int idx = FindWeaponSlotEmptyIndex();
-        if (idx == -1)
+        int idx = FindWeaponSlotEmptyIndex(); 
+        if (idx == -1) // 没有空位
         {
             WeaponTplInfo weapon = TplUtil.GetWeaponTplDic()[id];
-            if(weapon.Next == -1)
+            if(weapon.Next == -1) // 无法合成
             {
                 EventCenter.Broadcast(EventDefine.ShowNoticeInfoUI, "当前武器槽没有空位");
                 return false;
             }
             idx = FindWeaponSlotIndexSameAsID(id);
-            if(idx == -1)
+            if(idx == -1) 
             {
                 EventCenter.Broadcast(EventDefine.ShowNoticeInfoUI, "当前武器槽没有空位");
                 return false;
@@ -164,6 +168,7 @@ public class GameManager : ManagerBase<GameManager>
                     EventCenter.Broadcast(EventDefine.ShowNoticeInfoUI, "当前金币不足");
                     return false;
                 }
+                OnMoneyChange(-1 * needMoney);
                 gameData.WeaponIDs[idx] = weapon.Next;
             }
         }else
@@ -262,4 +267,78 @@ public class GameManager : ManagerBase<GameManager>
         }
         return idx;
     }
+
+
+    #endregion
+
+    #region SaveOrLoad 
+    public void SaveOrLoadData(bool isLoad , int idx)
+    {
+        StartCoroutine(LoadScene(isLoad, idx));
+    }
+
+    IEnumerator LoadScene(bool isLoad, int idx)
+    {
+        if (isLoad)
+        {
+            LoadGameData(idx);
+            state = StateID.ShopState;
+            AsyncOperation t = SceneManager.LoadSceneAsync("BattleScene");
+            while (!t.isDone)
+            {
+                yield return null;
+                Debug.Log("加载场景");
+            }
+            EventCenter.Broadcast(EventDefine.ShowShopUI);
+        }
+        else
+        {
+            SaveGameData(idx);
+            state = StateID.FightState;
+            var t = SceneManager.LoadSceneAsync("BattleScene");
+            while (!t.isDone)
+            {
+                yield return null;
+                Debug.Log("加载场景");
+            }
+            EventCenter.Broadcast(EventDefine.HideShopUI);
+        }
+    }
+    
+    // 存档
+    public void SaveGameData(int Idx)
+    {
+        try
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            using (FileStream fs = File.Create(Application.persistentDataPath + string.Format("/SaveData{0}.data", Idx)))
+            {
+                bf.Serialize(fs, gameData);
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError(e.Message);
+        }
+    }
+    
+    // 读档
+    public void LoadGameData(int Idx)
+    {
+        try
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            using (FileStream fs = File.Open(Application.persistentDataPath + string.Format("/SaveData{0}.data", Idx) , FileMode.Open))
+            {
+                gameData = (GameData)bf.Deserialize(fs);
+                state = StateID.ShopState;
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError(e.Message);
+        }
+    }
+
+    #endregion
 }

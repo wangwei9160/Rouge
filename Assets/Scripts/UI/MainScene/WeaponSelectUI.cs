@@ -3,23 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class WeaponSelectUI : MonoBehaviour 
 {
     public Button CloseButton;              // 关闭按钮
     public GameObject Content;              // 武器内容
-    public Button WeaponButtonPrefab;   // 武器ui预制体 
+    public Button WeaponButtonPrefab;       // 武器ui预制体 
+
     void Start()
     {
-        Refresh();
         CloseButton.onClick.AddListener(() =>
         {
             gameObject.SetActive(false);
         });
-    }
-
-    void Update()
-    {
+        Refresh();
     }
 
     private void Refresh()
@@ -30,15 +28,19 @@ public class WeaponSelectUI : MonoBehaviour
             if (item.Value.Rank == 0)
             {
                 Button go = Instantiate(WeaponButtonPrefab, Content.transform);
-                go.GetComponent<WeaponButtonUI>().SetUI(item.Value.ID);
+                go.GetComponent<WeaponBtnUI>().SetUI(item.Value.ID);
                 go.onClick.AddListener(() =>
                 {
+                    EventCenter.Broadcast<int>(EventDefine.RefreshWeaponByID, item.Value.ID);
+                    // 先设置后广播
                     GameManager.Instance.gameData.WeaponIDs[0] = item.Value.ID;
-                    gameObject.SetActive(false);
                     EventCenter.Broadcast(EventDefine.RefreshWeapon);
+                    //gameObject.SetActive(false);
                 });
             }
         }
+        // 全部创建好后广播一次
+        //EventCenter.Broadcast<int>(EventDefine.RefreshWeaponByID, GameManager.Instance.gameData.WeaponIDs[0]);
     }
 
 }

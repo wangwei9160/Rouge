@@ -23,4 +23,6 @@ public class AssetManager : ScriptableObject
     public List<Sprite> WeaponForShowSprite;    // ÎäÆ÷Í¼Æ¬
 
     public GameObject SaveFileDataTpl;          // ´æµµÄ£°å
+
+    public Sprite[] Ñ¡ÔñÎäÆ÷;                   // 0->Î´Ñ¡ÖĞÎäÆ÷ 1->Ñ¡ÖĞÎäÆ÷
 }

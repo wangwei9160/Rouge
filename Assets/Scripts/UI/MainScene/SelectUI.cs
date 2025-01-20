@@ -34,6 +34,12 @@ public class SelectUI : MonoBehaviour
         });
         StartGame.onClick.AddListener(() =>
         {
+            if (GameManager.Instance.gameData.WeaponIDs[0] == -1)
+            {
+                EventCenter.Broadcast(EventDefine.ShowNoticeInfoUI, "«Îœ»—°‘Ò≥ı ºŒ‰∆˜");
+                return;
+            }
+
             EventCenter.Broadcast<int>(EventDefine.ShowDataFileUI, 0);
             //EventCenter.Broadcast(EventDefine.StartGame);
             //SceneManager.LoadScene("BattleScene");
@@ -54,7 +60,8 @@ public class SelectUI : MonoBehaviour
 
     private void Show()
     {
-        gameObject.SetActive(true); 
+        gameObject.SetActive(true);
+        RefreshWeapon();
     }
     private void Hide()
     {

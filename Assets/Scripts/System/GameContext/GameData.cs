@@ -64,11 +64,6 @@ public class GameData
         ItemCount = new List<int>();
     }
 
-    public void Init()
-    {
-        WeaponIDs[0] = 6; // 暂时默认获得一个武器，后续修改为初始自主选择
-    }
-
     public bool HasItem(int id)
     {
         return ItemMap.ContainsKey(id);

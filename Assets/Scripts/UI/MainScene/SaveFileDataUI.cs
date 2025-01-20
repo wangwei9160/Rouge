@@ -1,5 +1,5 @@
+
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -9,8 +9,13 @@ public class SaveFileDataUI : MonoBehaviour
 {
     public int Index;
     public bool isLoad;
-    public TMP_Text text; // 空图标
+    public Text text; // 空图标
     public bool isEmpty = true;
+
+    private void OnEnable()
+    {
+        Refresh();   
+    }
 
     private void Start()
     {
@@ -28,20 +33,38 @@ public class SaveFileDataUI : MonoBehaviour
         //GameManager.Instance.gameData.Init();
         GameManager.Instance.gameData.SaveIndex = Index;
         EventCenter.Broadcast(EventDefine.StartGame);
-        //Debug.Log("加载战斗场景");
-        SceneManager.LoadScene("BattleScene");
+        GameManager.Instance.SaveOrLoadData(isLoad, Index);
     }
     
     public void Set(int idx , bool Load)
     {
         Index = idx;
         isLoad = Load;
-        isEmpty = true;
+        //Refresh();
     }
 
     public void Refresh()
     {
+        StartCoroutine(IORefresh());
+    }
 
+    IEnumerator IORefresh()
+    {
+        yield return new WaitForSeconds(RandomUtil.RandomFloat(0.2f , false));
+        string path = Application.persistentDataPath + string.Format("/SaveData{0}.data", Index);
+        if (!System.IO.File.Exists(path))
+        {
+            //Debug.Log(string.Format("{0} 不存在", path));
+            isEmpty = true;
+            text.gameObject.SetActive(true);
+        }
+        else
+        {
+            text.gameObject.SetActive(false);
+            isEmpty = false;
+            Debug.Log(string.Format("存在文件SaveData{0}.data", Index));
+        }
+        yield return new WaitForSeconds(0.1f);
     }
 
 }

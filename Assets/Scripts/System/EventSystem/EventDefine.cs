@@ -21,7 +21,9 @@ public enum EventDefine
     RefreshItem,
     RefreshEnemyCount,
     RefreshPlayerAttribute,
-    
+
+    // 刷新界面带参数
+    RefreshWeaponByID,
 
     // 怪物死亡
     OneEnemyDeath

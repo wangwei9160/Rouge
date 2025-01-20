@@ -54,7 +54,7 @@ public class UIManager : ManagerBase<UIManager>
 
     void Start()
     {
-        ShopUI.SetActive(false);
+        //ShopUI.SetActive(false);
         DamageCountUIButton.onClick.AddListener(() =>
         {
             DamageCount.SetActive(!DamageCount.activeInHierarchy);

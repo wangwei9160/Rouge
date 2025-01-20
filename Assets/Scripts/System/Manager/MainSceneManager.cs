@@ -9,6 +9,8 @@ public class MainSceneManager : ManagerBaseWithoutPersist<MainSceneManager>
     public Button signleButton;     // 单人游戏进入选择界面
     public Button teamButton;       // 修改为存档系统
 
+    public Transform UI;            // UI root
+
     public GameObject BG;           // 背景
     public GameObject buttons;      // 所有按钮
     public GameObject SelectUI;     // 选择界面
@@ -32,7 +34,6 @@ public class MainSceneManager : ManagerBaseWithoutPersist<MainSceneManager>
 
     void Start()
     {
-        SelectUI.SetActive(false);
         signleButton.onClick.AddListener(() =>
         {
             EventCenter.Broadcast(EventDefine.ShowSelectUI);
@@ -63,12 +64,11 @@ public class MainSceneManager : ManagerBaseWithoutPersist<MainSceneManager>
     {
         BG.SetActive(true);
         buttons.SetActive(true);
-        GameManager.Instance.gameData.Init();
     }
 
     public void Notice(string arg)
     {
-        GameObject tmp = Instantiate(Info , gameObject.transform);
+        GameObject tmp = Instantiate(Info , UI);
         tmp.GetComponent<NoticeInfoUI>().SetInfo(arg);
     }
 

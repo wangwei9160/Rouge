@@ -22,6 +22,7 @@ public class CoinUI : MonoBehaviour
     private void Start()
     {
         moreCoin.onClick.AddListener(GetMoney);
+        OnMoneyChange();
     }
 
     public void GetMoney()
