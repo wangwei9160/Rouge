@@ -5,7 +5,6 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.TextCore.Text;
 
 
 public class GameManager : ManagerBase<GameManager>

@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using Unity.Burst.Intrinsics;
 
 public class Constants
 {
     public static string PLAYERPREFES = "data-";
+    public static string TALENTPLAYERPREFS = "TALENT";
 
     public static int FILEDATA_SLOT_MAX = 10;
 

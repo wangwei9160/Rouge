@@ -24,6 +24,7 @@ public enum EventDefine
 
     // 刷新界面带参数
     RefreshWeaponByID,
+    UpTalentByID,
 
     // 怪物死亡
     OneEnemyDeath
