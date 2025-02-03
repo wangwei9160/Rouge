@@ -21,6 +21,7 @@ public class GameOverPanel : MonoBehaviour
         BackMenuBtn.onClick.AddListener(() =>
         {
             GameManager.Instance.ClearGameData(GameManager.Instance.gameData.SaveIndex);
+            GameManager.Instance.TalentOnGet(1);    // 获得一点天赋点
             SceneManager.LoadScene("MainScene");
         });    
         gameObject.SetActive(false);

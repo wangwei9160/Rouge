@@ -44,6 +44,7 @@ public class RootNode
 public class TalentData
 {
     public int Total;                  // ID
+    public int MaxNumber;              // 天赋点数上限
     public List<int> Cnt;              // 已经设置的数量
     public List<int> MaxCnt;           // 最大设置的数量
     public List<RootNode> Roots;       // 父节点
@@ -51,6 +52,7 @@ public class TalentData
     public TalentData()
     {
         Total = 0;
+        MaxNumber = 16;
         Cnt = new List<int> { 0, 0, 0, 0 };
         MaxCnt = new List<int> { 5, 5, 5, 1 };
         Roots = new List<RootNode>
@@ -61,7 +63,5 @@ public class TalentData
             new RootNode(new(){1,2}),
         };
     }
-
-
 
 }

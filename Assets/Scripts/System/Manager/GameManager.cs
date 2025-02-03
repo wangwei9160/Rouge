@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -289,6 +290,19 @@ public class GameManager : ManagerBase<GameManager>
     #endregion
 
     #region SaveOrLoad 
+
+    // 天赋树点数获得
+    public void TalentOnGet(int number)
+    {
+        string js = PlayerPrefs.GetString(Constants.TALENTPLAYERPREFS);
+        TalentData talentData = JsonUtility.FromJson<TalentData>(js);
+        talentData.Total = math.min(math.max(talentData.Total + number, 0) , talentData.MaxNumber);
+        string json = JsonUtility.ToJson(talentData);
+        //Debug.Log(json);
+        PlayerPrefs.SetString(Constants.TALENTPLAYERPREFS, json);
+        PlayerPrefs.Save();
+    }
+
     // 保存或者加载
     public void SaveOrLoadData(bool isLoad , int idx)
     {
@@ -306,7 +320,7 @@ public class GameManager : ManagerBase<GameManager>
             while (!t.isDone)
             {
                 yield return null;
-                Debug.Log("加载场景");
+                //Debug.Log("加载场景");
             }
             EventCenter.Broadcast(EventDefine.ShowShopUI);
         }
@@ -319,7 +333,7 @@ public class GameManager : ManagerBase<GameManager>
             while (!t.isDone)
             {
                 yield return null;
-                Debug.Log("加载场景");
+                //Debug.Log("加载场景");
             }
             EventCenter.Broadcast(EventDefine.HideShopUI);
         }
