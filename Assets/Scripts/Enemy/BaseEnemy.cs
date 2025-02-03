@@ -90,13 +90,15 @@ public class BaseEnemy : MonoBehaviour
         return true;
     }
 
-    public void ChangeAnimation(string animation, float crossfade = 0.2f)
+    public bool ChangeAnimation(string animation, float crossfade = 0.2f)
     {
         if (currentAnimation != animation)
         {
             currentAnimation = animation;
             animator.CrossFade(animation, crossfade);
+            return true;
         }
+        return false;
     }
 
 }

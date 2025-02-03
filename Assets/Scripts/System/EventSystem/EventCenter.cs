@@ -61,6 +61,12 @@ public static class EventCenter
         m_Event[eventType] = (CallBack<T>)m_Event[eventType] + callback;
     }
 
+    public static void AddListener<T , U>(EventDefine eventType, CallBack<T , U> callback)
+    {
+        OnListenerAdding(eventType, callback);
+        m_Event[eventType] = (CallBack<T ,U>)m_Event[eventType] + callback;
+    }
+
 
     public static void RemoveListener(EventDefine eventType, CallBack callback)
     {
@@ -73,6 +79,13 @@ public static class EventCenter
     {
         OnListenerRemoving(eventType, callback);
         m_Event[eventType] = (CallBack<T>)m_Event[eventType] - callback;
+        OnEventRemove(eventType);
+    }
+
+    public static void RemoveListener<T , U>(EventDefine eventType, CallBack<T , U> callback)
+    {
+        OnListenerRemoving(eventType, callback);
+        m_Event[eventType] = (CallBack<T , U>)m_Event[eventType] - callback;
         OnEventRemove(eventType);
     }
 
@@ -101,6 +114,23 @@ public static class EventCenter
             if (callBack != null)
             {
                 callBack(arg);
+            }
+            else
+            {
+                throw new Exception(string.Format("¹ã²¥ÊÂ¼þ{0}´íÎó", eventType));
+            }
+        }
+    }
+
+    public static void Broadcast<T , U>(EventDefine eventType, T arg1 , U arg2)
+    {
+        Delegate d;
+        if (m_Event.TryGetValue(eventType, out d))
+        {
+            CallBack<T , U> callBack = (CallBack<T , U>)d;
+            if (callBack != null)
+            {
+                callBack(arg1 , arg2);
             }
             else
             {

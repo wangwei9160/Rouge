@@ -1,23 +1,10 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
-public abstract class ManagerBase<T> : MonoBehaviour where T : MonoBehaviour
+public abstract class StaticBase<T> : MonoBehaviour where T : MonoBehaviour
 {
     public static T Instance { get; private set; }
-
-    protected virtual void Awake()
-    {
-        if (Instance != null)
-        {
-            Destroy(Instance);
-        }else
-        {
-            Instance = this as T;
-        }
-        DontDestroyOnLoad(gameObject);
-    }
-
-
-
+    protected virtual void Awake() => Instance = this as T;
     protected virtual void OnApplicationQuit()
     {
         Instance = null;
@@ -25,25 +12,25 @@ public abstract class ManagerBase<T> : MonoBehaviour where T : MonoBehaviour
     }
 }
 
-public abstract class ManagerBaseWithoutPersist<T> : MonoBehaviour where T : MonoBehaviour
+public abstract class Singleton<T> : StaticBase<T> where T : MonoBehaviour
 {
-    public static T Instance { get; private set; }
-
-    protected virtual void Awake()
+    protected override void Awake()
     {
-        if (Instance != null)
+        if(Instance != null)
         {
-            Destroy(Instance);
-        }
-        else
+            Destroy(gameObject);
+        }else
         {
-            Instance = this as T;
+            base.Awake();
         }
     }
+}
 
-    protected virtual void OnApplicationQuit()
+public abstract class ManagerBase<T> : Singleton<T> where T : MonoBehaviour
+{
+    protected override void Awake()
     {
-        Instance = null;
+        base.Awake();
+        DontDestroyOnLoad(gameObject);
     }
-
 }

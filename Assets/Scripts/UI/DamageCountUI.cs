@@ -2,62 +2,49 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class DamageCountUI : MonoBehaviour 
 {
-    public GameManager gameManager;
     public Button closeButton;
-
     public GameObject WeaponDamageItemPrefab;
-
     public GameObject scrollContent;
-
-    private float mCurrentSecond = 0;
 
     void Awake()
     {
-        
+        EventCenter.AddListener(EventDefine.HideShopUI , Clear);
     }
 
-    public void OnEnable()
+    private void OnDestroy()
     {
-        UpdateUI();
+        EventCenter.RemoveListener(EventDefine.HideShopUI, Clear);
     }
 
     void Start()
-    {
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();  
+    { 
         closeButton.onClick.AddListener(()=>{
             gameObject.SetActive(false);
         });
+        Clear();
+        gameObject.SetActive(false);
     }
 
-    void Update()
-    {
-        mCurrentSecond += Time.deltaTime;
-
-        if(mCurrentSecond >= 1)
-        {
-            UpdateUI();
-            mCurrentSecond = 0;
-        }
-    }
-
-    private void UpdateUI()
+    private void Clear()
     {
         foreach (Transform item in scrollContent.transform)
         {
             Destroy(item.gameObject);
         }
-        if(GameManager.Instance != null)
+        Dictionary<int,int> tDic = new Dictionary<int,int>();
+        foreach (var id in GameManager.Instance.gameData.WeaponIDs)
         {
-            var dic = UIManager.Instance.allWeaponDamage();
-            foreach (var item in dic)
+            if (id != -1 && !tDic.ContainsKey(id))
             {
+                tDic.Add(id, 1);
                 var it = GameObject.Instantiate(WeaponDamageItemPrefab, scrollContent.transform);
-                it.GetComponent<WeaponDemageShowUI>().SetWeapon(item.Key, item.Value);
+                it.GetComponent<WeaponDemageShowUI>().SetWeapon(id, 0);
             }
         }
-        
+        gameObject.SetActive(false);
     }
 }

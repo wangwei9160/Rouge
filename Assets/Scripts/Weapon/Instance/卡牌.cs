@@ -28,7 +28,7 @@ public class ø®≈∆ : BaseWeapon
         {
             GameObject go_mid = Instantiate(go, transform);
             go_mid.GetComponent<BallController>().SetMove(gameObject.transform.position, v3 + new Vector3(dis / 2 * (rota), 0 ,0));
-            go_mid.GetComponent<BallController>().ResetInfo(attack, "∆’Õ®Ω£");
+            go_mid.GetComponent<BallController>().ResetInfo(attack, ID);
         }
         
     }

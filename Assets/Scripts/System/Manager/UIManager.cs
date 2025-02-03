@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 
-public class UIManager : ManagerBase<UIManager>
+public class UIManager : Singleton<UIManager>
 {
     public Transform canvas;
 
@@ -16,12 +16,9 @@ public class UIManager : ManagerBase<UIManager>
     public Button DamageCountUIButton;
     public GameObject DamageCount;
 
-    private Dictionary<string, int> WeaponDamage = new Dictionary<string, int>();
-
     // 商店UI
     public GameObject ShopUI;
     public bool[] isLock = new bool[4];
-
 
     // 关卡UI
     public Text CurrentWave;                    // 当前波次
@@ -69,6 +66,7 @@ public class UIManager : ManagerBase<UIManager>
         PlayerInfoShow.gameObject.SetActive(false);
         WaveUI.SetActive(false);
         EnemyUI.SetActive(false);
+        DamageCount.SetActive(false);
     }
 
     private void HideShopUI()
@@ -81,29 +79,13 @@ public class UIManager : ManagerBase<UIManager>
         EnemyUI.SetActive(true);
         UpdateCurrentLevel();
         UpdateEnemy();
+        
     }
 
     private void ShowNoticeInfoUI(string str)
     {
         GameObject go = Instantiate(NoticeInfoPrefab , canvas);
         go.GetComponent<NoticeInfoUI>().SetInfo(str);
-    }
-
-    // 更新武器伤害
-    public void UpdateWeaponDamage(string name, int value)
-    {
-        if (WeaponDamage.ContainsKey(name))
-        {
-            WeaponDamage[name] += value;
-        }else
-        {
-            WeaponDamage.Add(name, value);
-        }
-    }
-
-    public Dictionary<string,int> allWeaponDamage()
-    {
-        return WeaponDamage;
     }
 
     public void UpdateCurrentLevel()
@@ -120,6 +102,10 @@ public class UIManager : ManagerBase<UIManager>
     public void UpdatePlayerInfoShow()
     {
         PlayerInfoShow.GetComponent<PlayerInfoUI>().UpdateExp(GameManager.Instance.gameData.curLevel , GameManager.Instance.gameData.curExp , GameManager.Instance.gameData.nextLevelExp);
+        PlayerInfoShow.GetComponent<PlayerInfoUI>().UpdateHp(
+            GameManager.Instance.gameData.curHp,
+            (int)GameManager.Instance.gameData.playerAttr.maxHp
+            );
     }
 
 }

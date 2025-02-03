@@ -57,10 +57,22 @@ public class 近战公牛 : BaseEnemy
         else if (Status == 2)
         {
             // 攻击
-            ChangeAnimation("Attack_01");
+            if (ChangeAnimation("Attack_01"))
+            {
+                StartCoroutine(AttackFunc());
+            }
 
         }
         //curHp -= 1f * Time.deltaTime;
+    }
+
+    IEnumerator AttackFunc()
+    {
+        yield return new WaitForSeconds(1.0f);
+        GameManager.Instance.OnHpChange((int)attr.攻击力);
+        DamageUIManager.Instance.ShowDamgeText(player.transform, (int)attr.攻击力);
+        yield return new WaitForSeconds(0.5f);
+        ChangeAnimation("Idle");
     }
 
 }

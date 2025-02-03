@@ -30,16 +30,17 @@ public class TalentTreeUI : MonoBehaviour
     private void Start()
     {
         //PlayerPrefs.DeleteKey("Talent");
-        //if (!PlayerPrefs.HasKey(Constants.TALENTPLAYERPREFS))
-        //{
-        //    talentData = new TalentData();
-        //    string json = JsonUtility.ToJson(talentData);
-        //    Debug.Log(json);
-        //    PlayerPrefs.SetString(Constants.TALENTPLAYERPREFS, json);
-        //    PlayerPrefs.Save();
-        //}
+        // 防止build后playerprefs不存在导致的无效问题
+        if (!PlayerPrefs.HasKey(Constants.TALENTPLAYERPREFS))
+        {
+            talentData = new TalentData();
+            string json = JsonUtility.ToJson(talentData);
+            //Debug.Log(json);
+            PlayerPrefs.SetString(Constants.TALENTPLAYERPREFS, json);
+            PlayerPrefs.Save();
+        }
         string js = PlayerPrefs.GetString(Constants.TALENTPLAYERPREFS);
-        Debug.Log(js);
+        //Debug.Log(js);
         talentData = JsonUtility.FromJson<TalentData>(js);
         TalentNumberOnChange(0);
         for (int i = 0; i < Buttons.Length; i++)
@@ -62,7 +63,7 @@ public class TalentTreeUI : MonoBehaviour
     {
         talentData.Total = math.max(talentData.Total + number, 0);
         string json = JsonUtility.ToJson(talentData);
-        Debug.Log(json);
+        //Debug.Log(json);
         PlayerPrefs.SetString(Constants.TALENTPLAYERPREFS, json);
         PlayerPrefs.Save();
         RefreshTalentNumber();

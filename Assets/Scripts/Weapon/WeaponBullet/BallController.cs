@@ -4,13 +4,12 @@ public class BallController : 直线飞行
 {
     public float damage = 10f;          // 伤害
     
+    public int ID;                 // 来源武器的ID
 
-    public string Name;                 // 来源武器的名称
-
-    public void ResetInfo(float dam , string name)
+    public void ResetInfo(float dam , int id)
     {
         damage = dam;
-        Name = name;
+        ID = id;
     }
 
     public bool isAlive = true;         // 是否可以穿透
@@ -37,7 +36,7 @@ public class BallController : 直线飞行
             isAlive = false;
             Destroy(gameObject);
             DamageUIManager.Instance.ShowDamgeText(other.gameObject.transform,(int)damage);
-            UIManager.Instance.UpdateWeaponDamage(Name, (int)damage);
+            EventCenter.Broadcast(EventDefine.RefreshDamageByID , ID , (int)damage);
         }
     }
 

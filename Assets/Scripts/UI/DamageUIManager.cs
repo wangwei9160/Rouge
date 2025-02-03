@@ -29,7 +29,7 @@ public class ShowDamageAction
     public DamageData data;
 }
 
-public class DamageUIManager : ManagerBase<DamageUIManager> 
+public class DamageUIManager : Singleton<DamageUIManager> 
 {
 
     public GameObject damgeUI;

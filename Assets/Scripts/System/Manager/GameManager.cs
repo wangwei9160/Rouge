@@ -115,6 +115,18 @@ public class GameManager : ManagerBase<GameManager>
         EventCenter.Broadcast(EventDefine.RefreshPlayerAttribute);
     }
 
+    public void OnHpChange(int damage)
+    {
+        gameData.curHp -= damage;
+        if(gameData.curHp <= 0)
+        {
+            gameData.curHp = 0;
+            EventCenter.Broadcast(EventDefine.GameOver);
+            return;
+        }
+        EventCenter.Broadcast(EventDefine.RefreshPlayerAttribute);
+    }
+
     private bool TryPayMoney(int money_)
     {
         if(gameData.money < money_)
@@ -374,6 +386,7 @@ public class GameManager : ManagerBase<GameManager>
             {
                 Debug.LogError(string.Format("{0} Î´ÕÒµ½", key));
             }
+            gameData = new GameData(); // Çå¿Õ
         }
         catch (Exception e)
         {
@@ -387,7 +400,7 @@ public class GameManager : ManagerBase<GameManager>
         FileShowData data = LoadPlayerPrefsData(Idx);
         data.Set(gameData);
         string jsonData = JsonUtility.ToJson(data);
-        Debug.Log(jsonData);
+        //Debug.Log(jsonData);
         PlayerPrefs.SetString(string.Format("{0}-{1}", Constants.PLAYERPREFES, Idx), jsonData);
         PlayerPrefs.Save();
     }

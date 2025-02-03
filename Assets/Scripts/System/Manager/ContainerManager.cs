@@ -1,7 +1,7 @@
 
 using UnityEngine;
 
-public class ContainerManager : ManagerBaseWithoutPersist<ContainerManager>
+public class ContainerManager : Singleton<ContainerManager>
 {
     public Transform EnemyContainer;
 }

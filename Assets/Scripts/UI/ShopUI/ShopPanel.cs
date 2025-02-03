@@ -10,6 +10,7 @@ public class ShopPanel : MonoBehaviour
     // 商店按钮
     public Button GoButton;
     public Button RefeshButton;
+    public Button BackBtn;
 
     // 奖励信息
     public GameObject awardPrefab;      
@@ -38,6 +39,12 @@ public class ShopPanel : MonoBehaviour
     {
         GoButton.onClick.AddListener(nextWave);
         RefeshButton.onClick.AddListener(RefreshAll);
+        BackBtn.onClick.AddListener(() =>
+        {
+            GameManager.Instance.SaveGameData(GameManager.Instance.gameData.SaveIndex);
+            SceneManager.LoadScene("MainScene");
+            GameManager.Instance.gameData = new GameData();
+        });
     }
 
     private void OnEnable()

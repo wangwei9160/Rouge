@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 
 
-public class EnemyGenerator : ManagerBaseWithoutPersist<EnemyGenerator>
+public class EnemyGenerator : Singleton<EnemyGenerator>
 {
 
     public GameObject[] monster;

@@ -3,7 +3,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MainSceneManager : ManagerBaseWithoutPersist<MainSceneManager> 
+public class MainSceneManager : Singleton<MainSceneManager> 
 {
     public bool isSignle = true;
     public Button signleButton;     // 单人游戏进入选择界面

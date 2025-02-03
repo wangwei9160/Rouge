@@ -8,27 +8,41 @@ public class WeaponDemageShowUI : MonoBehaviour
 {
     public TMP_Text weapon;
     public TMP_Text damge;
-    public Image image;
+    public Image BG;
+    public Image Icon;
+    public int ID;
+    public int Damage = 0;
 
-    void Start()
+    private void Awake()
     {
-        
+        EventCenter.AddListener<int,int>(EventDefine.RefreshDamageByID , Refresh);
     }
 
-    void Update()
+    private void OnDestroy()
     {
-        
+        EventCenter.RemoveListener<int, int>(EventDefine.RefreshDamageByID, Refresh);
     }
 
-    public void UpdateDamge(string _text)
+    public void SetWeapon(int id , int damage)
     {
-        damge.text = _text;
+        ID = id;
+        Damage = damage;
+        WeaponTplInfo info = TplUtil.GetWeaponTplDic()[id];
+        BG.sprite = AssetManager.Instance.RankSprite[info.Rank];
+        Icon.color = Color.white;
+        Icon.sprite = AssetManager.Instance.WeaponForShowSprite[info.Index];
+        weapon.text = info.Name.ToString();
+        damge.text = Damage.ToString();
     }
 
-    public void SetWeapon(string weapon_name , int damage)
+    public void Refresh(int id , int damage)
     {
-        weapon.text = weapon_name;
-        damge.text = damage.ToString();
+        if(id != ID)
+        {
+            return;
+        }
+        Damage += damage;
+        damge.text = Damage.ToString();
     }
 
 }

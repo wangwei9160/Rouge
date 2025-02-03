@@ -22,7 +22,7 @@ public class Weapon
     }
 }
 
-public class WeaponManager : ManagerBase<WeaponManager>
+public class WeaponManager : Singleton<WeaponManager>
 {
 
     public Dictionary<int, Weapon> allWeapon = new Dictionary<int, Weapon>();
