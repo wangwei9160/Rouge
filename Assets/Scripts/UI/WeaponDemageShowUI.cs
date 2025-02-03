@@ -10,8 +10,10 @@ public class WeaponDemageShowUI : MonoBehaviour
     public TMP_Text damge;
     public Image BG;
     public Image Icon;
+    public Slider slider;
     public int ID;
     public int Damage = 0;
+    public int DamageCount = 0; 
 
     private void Awake()
     {
@@ -37,12 +39,13 @@ public class WeaponDemageShowUI : MonoBehaviour
 
     public void Refresh(int id , int damage)
     {
-        if(id != ID)
+        DamageCount += damage;
+        if(id == ID)
         {
-            return;
+            Damage += damage;
+            damge.text = Damage.ToString();
         }
-        Damage += damage;
-        damge.text = Damage.ToString();
+        slider.value = 1.0f * Damage / DamageCount;
     }
 
 }

@@ -10,6 +10,7 @@ public class 绿苹果 : BaseItem
     {
         base.OnGet();
         GameManager.Instance.gameData.playerAttr.maxHp += 10;
+        GameManager.Instance.gameData.curHp += 5;
     }
 
     public override void OnDiscard()
