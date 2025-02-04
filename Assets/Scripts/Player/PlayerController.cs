@@ -1,9 +1,9 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
 
+    public BuffList buffs = new BuffList();
 
     public GameObject Weapons;  // 所有已有的武器
     public bool isInit = false;

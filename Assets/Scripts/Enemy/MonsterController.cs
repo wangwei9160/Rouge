@@ -118,6 +118,10 @@ public class MonsterController : MonoBehaviour
 
     void ChangeAnimation(string animation , float crossfade = 0.2f)
     {
+        if(currentAnimation == "Death")
+        {
+            return;
+        }
         if (currentAnimation != animation)
         {
             currentAnimation = animation;

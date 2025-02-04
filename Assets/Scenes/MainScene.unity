@@ -313,10 +313,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 30
+    m_FontSize: 27
     m_FontStyle: 1
     m_BestFit: 0
-    m_MinSize: 3
+    m_MinSize: 2
     m_MaxSize: 40
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -324,7 +324,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u9632\u5FA1+1%"
+  m_Text: "\u53D7\u5230\u4F24\u5BB3\u65F6\u51CF\u5C111\u70B9"
 --- !u!222 &21117305
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1605,10 +1605,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 30
+    m_FontSize: 20
     m_FontStyle: 1
     m_BestFit: 0
-    m_MinSize: 3
+    m_MinSize: 0
     m_MaxSize: 40
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -1616,7 +1616,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u6700\u5927\u751F\u547D\u503C+1%"
+  m_Text: "\u3010\u6218\u6597\u5F00\u59CB\u65F6\u3011\n\u6BCF\u62E5\u6709\u4E00\u70B9\u6700\u5927\u751F\u547D\u503C+10%"
 --- !u!222 &220291520
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3712,7 +3712,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &802303036
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4206,7 +4206,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u4F24\u5BB3\u7ED3\u679C+1%"
+  m_Text: "\u4F24\u5BB3\u7ED3\u679C+10%"
 --- !u!222 &850841732
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4394,6 +4394,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4357ff8ec55f60c43a7f59750d1c11b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  talentData:
+    Total: 0
+    MaxNumber: 16
+    Cnt: 00000000000000000000000000000000
+    MaxCnt: 05000000050000000500000001000000
+    Roots:
+    - root: ffffffff
+    - root: 00000000
+    - root: 01000000
+    - root: 0100000002000000
   isSignle: 1
   signleButton: {fileID: 1567355464}
   teamButton: {fileID: 1944015157}
@@ -8802,7 +8812,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u56DE\u5408\u6536\u5165+10"
+  m_Text: "\u56DE\u5408\u6536\u5165+50"
 --- !u!222 &1941696805
 CanvasRenderer:
   m_ObjectHideFlags: 0

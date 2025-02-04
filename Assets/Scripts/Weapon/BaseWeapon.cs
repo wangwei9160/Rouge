@@ -34,6 +34,7 @@ public class BaseWeapon : MonoBehaviour
 
     protected virtual void Start()
     {
+        
     }
 
     

@@ -92,6 +92,10 @@ public class BaseEnemy : MonoBehaviour
 
     public bool ChangeAnimation(string animation, float crossfade = 0.2f)
     {
+        if(currentAnimation == "Idle")
+        {
+            return false;
+        }
         if (currentAnimation != animation)
         {
             currentAnimation = animation;

@@ -76,7 +76,12 @@ public class TplUtil
         return GetTplDic<WaveTpl, WaveTplInfo>();
     }
 
-    
+    public static Dictionary<int, BuffTplInfo> GetBuffTplDic()
+    {
+        return GetTplDic<BuffTpl, BuffTplInfo>();
+    }
+
+
 
     //public static Dictionary<int , ItemTplInfo> GetItemTplDic()
     //{

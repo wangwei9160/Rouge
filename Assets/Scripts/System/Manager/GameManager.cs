@@ -12,7 +12,7 @@ public class GameManager : ManagerBase<GameManager>
 {
     public StateID state = StateID.ReadyState;
 
-    public GameData gameData;   // 游戏数据
+    public GameData gameData;       // 游戏数据
     public bool isLoadAsset = false;
 
     // 波次信息
@@ -70,7 +70,12 @@ public class GameManager : ManagerBase<GameManager>
     {
         GameContext.CurrentWaveKill = 0;
         GameContext.CurrentWaveCount = WaveDic[gameData.CurrentWave].Total;
-        
+        foreach (var buff in gameData.playerBuffList.buffs)
+        {
+            buff.OnBeforeWaveStart();
+        }
+        gameData.curHp = (int)gameData.playerAttr.maxHp;
+        EventCenter.Broadcast(EventDefine.RefreshPlayerAttribute);
         //Debug.Log(string.Format("{0} , {1} / {2}", gameData.CurrentWave, GameContext.CurrentWaveKill , GameContext.CurrentWaveCount));
         TransState(StateID.FightState);
     }
@@ -79,6 +84,11 @@ public class GameManager : ManagerBase<GameManager>
     {
         TransState(StateID.ShopState);
         OnMoneyChange(gameData.playerAttr.Revenues); // 每回合固定收入
+        // 回合结束buff触发
+        foreach (var buff in gameData.playerBuffList.buffs)
+        {
+            buff.OnWaveEnd();
+        }
         EventCenter.Broadcast(EventDefine.ShowShopUI);
         // 存档
         SaveGameData(gameData.SaveIndex);
@@ -315,14 +325,29 @@ public class GameManager : ManagerBase<GameManager>
         {
             LoadGameData(idx);
             SaveDataByPlayerPrefs(idx);
-            state = StateID.ShopState;
-            AsyncOperation t = SceneManager.LoadSceneAsync("BattleScene");
-            while (!t.isDone)
+            if(gameData.playTime != 0f)
             {
-                yield return null;
-                //Debug.Log("加载场景");
+                state = StateID.ShopState;
+                AsyncOperation t = SceneManager.LoadSceneAsync("BattleScene");
+                while (!t.isDone)
+                {
+                    yield return null;
+                    //Debug.Log("加载场景");
+                }
+                EventCenter.Broadcast(EventDefine.ShowShopUI);
+            }else
+            {
+                state = StateID.FightState;
+                var t = SceneManager.LoadSceneAsync("BattleScene");
+                while (!t.isDone)
+                {
+                    yield return null;
+                    //Debug.Log("加载场景");
+                }
+                EventCenter.Broadcast(EventDefine.HideShopUI);
+                DoBeforStartGame();
             }
-            EventCenter.Broadcast(EventDefine.ShowShopUI);
+            
         }
         else
         {
@@ -336,6 +361,7 @@ public class GameManager : ManagerBase<GameManager>
                 //Debug.Log("加载场景");
             }
             EventCenter.Broadcast(EventDefine.HideShopUI);
+            DoBeforStartGame();
         }
     }
     
@@ -400,7 +426,8 @@ public class GameManager : ManagerBase<GameManager>
             {
                 Debug.LogError(string.Format("{0} 未找到", key));
             }
-            gameData = new GameData(); // 清空
+            // 如果在准备覆盖时删除存档会导致当前没有数据然后覆盖一个新的存档导致错误
+            //gameData = new GameData(); // 清空
         }
         catch (Exception e)
         {

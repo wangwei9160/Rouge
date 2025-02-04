@@ -1,0 +1,26 @@
+[
+    {
+        "ID": 0,
+        "Name": "生命值祝福",
+        "Description": "战斗开始时，每拥有一点最大生命值+1%",
+        "Duration": 0
+    },
+    {
+        "ID": 1,
+        "Name": "伤害结果祝福",
+        "Description": "每拥有一个造成伤害时伤害结果+1%",
+        "Duration": 0
+    },
+    {
+        "ID": 2,
+        "Name": "防御祝福",
+        "Description": "每拥有一个受到伤害时减少一点",
+        "Duration": 0
+    },
+    {
+        "ID": 3,
+        "Name": "回合收入祝福",
+        "Description": "回合结束时额外获得10金币收益",
+        "Duration": 0
+    }
+]

@@ -4,7 +4,8 @@ public class BallController : 直线飞行
 {
     public float damage = 10f;          // 伤害
     
-    public int ID;                 // 来源武器的ID
+    public int ID;                  // 来源武器的ID
+    public GameObject source;       // 伤害来源
 
     public void ResetInfo(float dam , int id)
     {
@@ -31,12 +32,17 @@ public class BallController : 直线飞行
         if (other.gameObject.CompareTag("Enemy") && isAlive)
         {
             //bool ok = other.gameObject.GetComponent<MonsterController>().Damge(damage);
-            bool ok = other.gameObject.GetComponent<BaseEnemy>().Damage(damage);
+            int Damage = (int)damage;
+            foreach (var buff in GameManager.Instance.gameData.playerBuffList.buffs)
+            {
+                buff.OnBeforeDamage(ref Damage);
+            }
+            bool ok = other.gameObject.GetComponent<BaseEnemy>().Damage(Damage);
             if (!ok) return;
             isAlive = false;
             Destroy(gameObject);
-            DamageUIManager.Instance.ShowDamgeText(other.gameObject.transform,(int)damage);
-            EventCenter.Broadcast(EventDefine.RefreshDamageByID , ID , (int)damage);
+            DamageUIManager.Instance.ShowDamgeText(other.gameObject.transform, Damage);
+            EventCenter.Broadcast(EventDefine.RefreshDamageByID , ID , Damage);
         }
     }
 

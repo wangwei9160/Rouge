@@ -59,7 +59,7 @@ public class TalentData
         {
             new RootNode(new(){-1}),
             new RootNode(new(){0}),
-            new RootNode(new(){1}),
+            new RootNode(new(){0}),
             new RootNode(new(){1,2}),
         };
     }

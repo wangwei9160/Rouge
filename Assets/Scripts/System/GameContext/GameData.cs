@@ -14,6 +14,7 @@ public class GameData
     public int WeaponSlot = 6;              // 武器槽位
     public int CurrentWave = 1;             // 当前波次
     public PlayerAttribute playerAttr;      // 角色属性
+    public BuffList playerBuffList = new BuffList();    // 玩家buff列表用于保存
     public int[] WeaponIDs;                 // 持有武器列表
     public List<int> ItemIDs;               // 持有道具列表
     public List<int> ItemCount;             // 持有道具数量

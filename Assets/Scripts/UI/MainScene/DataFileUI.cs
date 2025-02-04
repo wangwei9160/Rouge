@@ -59,15 +59,6 @@ public class DataFileUI : MonoBehaviour
         }
     }
 
-    private void SaveOrLoad(int idx)
-    {
-        GameManager.Instance.gameData.SaveIndex = idx;
-        if(isLoad)
-        {
-
-        }
-    }
-
     private void Show(int Load)
     {
         isLoad = Load == 1; // 1表示读取， 0 表示保存

@@ -17,14 +17,14 @@ public class SaveFileDataUI : MonoBehaviour
     
     public bool isEmpty = true;
 
-    private void OnEnable()
-    {
-        //Refresh();
-    }
-
     private void Start()
     {
         gameObject.GetComponent<Button>().onClick.AddListener(OnClickThis);
+        DelButton.onClick.AddListener(() =>
+        {
+            GameManager.Instance.ClearGameData(Index);
+            RefreshData();
+        });
     }
 
     private void OnClickThis()
@@ -35,9 +35,20 @@ public class SaveFileDataUI : MonoBehaviour
             EventCenter.Broadcast(EventDefine.ShowNoticeInfoUI , "当前存档为空");
             return;
         }
-        //GameManager.Instance.gameData.Init();
+        
+        if (!isLoad)
+        {
+            // 覆盖存档时，开始新一的游戏，将天赋点转换为buff存入gamedata
+            for (int i = 0; i < MainSceneManager.Instance.talentData.Cnt.Count; i++)
+            {
+                for (int j = 0; j < MainSceneManager.Instance.talentData.Cnt[i]; j++)
+                {
+                    GameManager.Instance.gameData.playerBuffList.AddBuff(i);
+                }
+            }
+            //EventCenter.Broadcast(EventDefine.StartGame);
+        }
         GameManager.Instance.gameData.SaveIndex = Index;
-        EventCenter.Broadcast(EventDefine.StartGame);
         GameManager.Instance.SaveOrLoadData(isLoad, Index);
     }
     
@@ -45,12 +56,6 @@ public class SaveFileDataUI : MonoBehaviour
     {
         Index = idx;
         isLoad = Load;
-        //Refresh();
-        DelButton.onClick.AddListener(() =>
-        {
-            GameManager.Instance.ClearGameData(Index);
-            RefreshData();
-        });
         RefreshData();
     }
 

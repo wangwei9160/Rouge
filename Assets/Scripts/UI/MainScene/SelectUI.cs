@@ -40,6 +40,8 @@ public class SelectUI : MonoBehaviour
                 return;
             }
 
+            
+
             EventCenter.Broadcast<int>(EventDefine.ShowDataFileUI, 0);
             //EventCenter.Broadcast(EventDefine.StartGame);
             //SceneManager.LoadScene("BattleScene");
@@ -61,6 +63,7 @@ public class SelectUI : MonoBehaviour
     private void Show()
     {
         gameObject.SetActive(true);
+        GameManager.Instance.gameData = new GameData();
         RefreshWeapon();
     }
     private void Hide()
