@@ -16,6 +16,7 @@ public class AssetManager : ScriptableObject
             return instance;
         }
     }
+    public Sprite CriticalImage;                // ±©»÷Í¼Æ¬
 
     public List<Sprite> itemSprite;             // ÎïÆ·Í¼Æ¬
     public List<Sprite> RankSprite;             // ÎäÆ÷µÈ¼¶

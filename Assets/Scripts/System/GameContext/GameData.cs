@@ -20,6 +20,7 @@ public class GameData
     public List<int> ItemCount;             // 持有道具数量
     public int[] ShopItemID;                // 商店刷新物品id
     public int[] ShopItemType;              // 商店刷新物品type
+    public bool[] ShopLock;                 // 商店锁
 
     public int freeTime = 0;                // 免费刷新次数
     public int refreshCnt = 1;              // 刷新次数
@@ -28,7 +29,7 @@ public class GameData
 
     public int curLevel = 1;                // 当前等级
     public int curExp = 0;                  // 当前经验
-    public int nextLevelExp = 100;          // 升到下一级所需经验
+    public int nextLevelExp = 80;          // 升到下一级所需经验
 
     public int curHp = 100;                 // 当前生命值
 
@@ -59,6 +60,7 @@ public class GameData
         }
         ShopItemID = new int[ShopSlot];
         ShopItemType = new int[ShopSlot];
+        ShopLock = new bool[ShopSlot];
         for (int i = 0; i < ShopSlot; i++)
         {
             ShopItemType[i] = ShopItemID[i] = -1;
@@ -97,6 +99,13 @@ public class GameData
             curExp -= nextLevelExp;
             nextLevelExp += nextLevelExp / 2;
             curLevel++;
+            #region 升级效果
+            curHp += 10;
+            playerAttr.maxHp += 10;
+            playerAttr.attackPower++;
+            playerAttr.CriticalHitRate++;
+            playerAttr.CriticalDamage++;
+            #endregion
         }
         EventCenter.Broadcast(EventDefine.RefreshPlayerAttribute);
     }

@@ -14,7 +14,7 @@ public class DamgeUI : MonoBehaviour
 
 
     public TMP_Text damageUI;
-    public GameObject critical;
+    public Image critical;
 
     private Color curColor;
 
@@ -46,9 +46,13 @@ public class DamgeUI : MonoBehaviour
         if(_data.Damage.isCritical)
         {
             Debug.Log("±©»÷ÁË" + ((int)_data.Damage.Value).ToString());
-            critical.SetActive(true);
+            critical.gameObject.SetActive(true);
+            critical.sprite = AssetManager.Instance.CriticalImage;
             damageUI.color = new Color(1f,0f,0f);
             curColor = damageUI.color;
+        }else
+        {
+            critical.gameObject.SetActive(false);
         }
         damageUI.text = ((int)_data.Damage.Value).ToString();
     }

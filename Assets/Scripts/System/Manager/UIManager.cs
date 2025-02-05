@@ -67,7 +67,6 @@ public class UIManager : Singleton<UIManager>
         PlayerInfoShow.gameObject.SetActive(false);
         WaveUI.SetActive(false);
         EnemyUI.SetActive(false);
-        DamageCount.SetActive(false);
     }
 
     private void HideShopUI()
@@ -80,7 +79,6 @@ public class UIManager : Singleton<UIManager>
         EnemyUI.SetActive(true);
         UpdateCurrentLevel();
         UpdateEnemy();
-        
     }
 
     private void ShowNoticeInfoUI(string str)

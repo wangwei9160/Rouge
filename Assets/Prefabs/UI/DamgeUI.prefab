@@ -74,8 +74,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278207999
-  m_fontColor: {r: 1, g: 0.27234694, b: 0, a: 1}
+    rgba: 4278219775
+  m_fontColor: {r: 1, g: 0.449203, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -184,7 +184,7 @@ MonoBehaviour:
   Speed: 1
   ColorFadedSpeed: 1
   damageUI: {fileID: 6766360142073318068}
-  critical: {fileID: 6970466771734305838}
+  critical: {fileID: 8689050751397259633}
 --- !u!1 &6970466771734305838
 GameObject:
   m_ObjectHideFlags: 0
@@ -252,13 +252,13 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 85b4f0956ff764269b9dcb974286977e, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
-  m_UseSpriteMesh: 0
+  m_UseSpriteMesh: 1
   m_PixelsPerUnitMultiplier: 1
 --- !u!1 &8974679766613870326
 GameObject:
@@ -318,7 +318,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 25
+  m_AdditionalShaderChannelsFlag: -1
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0

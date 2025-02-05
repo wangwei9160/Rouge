@@ -55,7 +55,7 @@ public class ShopPanel : MonoBehaviour
     void Start()
     {
         GoButton.onClick.AddListener(nextWave);
-        RefeshButton.onClick.AddListener(RefreshAll);
+        RefeshButton.onClick.AddListener(PayForRefresh);
         RefreshButtonUI();
         BackBtn.onClick.AddListener(() =>
         {
@@ -79,25 +79,31 @@ public class ShopPanel : MonoBehaviour
         RefreshText.text = GameManager.Instance.gameData.freeTime > 0 ? "免费" : string.Format("刷新 -{0}",GameManager.Instance.gameData.refreshCnt);
     }
 
-    public void RefreshAll()
+    public void PayForRefresh()
     {
         int need = GameManager.Instance.gameData.freeTime > 0 ? 0 : GameManager.Instance.gameData.refreshCnt;
         if (GameManager.Instance.TryPayMoney(need))
         {
             GameManager.Instance.OnMoneyChange(-1 * need);
-            if(need == 0)
+            if (need == 0)
             {
                 GameManager.Instance.gameData.freeTime -= 1;
-            }else
+            }
+            else
             {
                 GameManager.Instance.gameData.refreshCnt++;
             }
         }
         else
         {
-            EventCenter.Broadcast(EventDefine.ShowNoticeInfoUI , "金币不足");
+            EventCenter.Broadcast(EventDefine.ShowNoticeInfoUI, "金币不足");
             return;
         }
+        RefreshAll();
+    }
+
+    public void RefreshAll()
+    {
         RefreshButtonUI();
         RefreshAllShopItem();
         RefreshPlayerAttribute();
@@ -124,8 +130,28 @@ public class ShopPanel : MonoBehaviour
         var p2 = Constants.GetRankTypeProbabilityByLevel(GameDataInstance.curLevel);
         for(int i = 0; i < GameDataInstance.ShopSlot; i++)
         {
+
             GameObject go = ScrollViewContent.transform.GetChild(i).gameObject;
             GameObject item = go.transform.GetChild(0).gameObject;
+            item.GetComponent<BuyItemScript>().SetIndex(i);
+            // 锁
+            if (GameManager.Instance.gameData.ShopLock[i])
+            {
+                if (GameManager.Instance.gameData.ShopItemType[i] == 1)
+                {
+                    int rd = GameManager.Instance.gameData.ShopItemID[i];
+                    ItemTplInfo info = TplUtil.GetItemTplDic()[rd];
+                    go.name = string.Format("item-{0}-{1}", info.ID, info.Name);
+                    item.GetComponent<BuyItemScript>().ResetItem(info);
+                }else if (GameManager.Instance.gameData.ShopItemType[i] == 0)
+                {
+                    int rd = GameManager.Instance.gameData.ShopItemID[i];
+                    WeaponTplInfo info = TplUtil.GetWeaponTplDic()[rd];
+                    go.name = string.Format("weapon-{0}-{1}", info.ID, info.Name);
+                    item.GetComponent<BuyItemScript>().ResetWeapon(info);
+                }
+                continue;
+            }
             int WeaponOrItem = RandomUtil.RandomIndexWithProbablity(p1);
             int RankType = RandomUtil.RandomIndexWithProbablity(p2);
             if (WeaponOrItem == 1)
@@ -139,8 +165,11 @@ public class ShopPanel : MonoBehaviour
                 ItemTplInfo info = TplUtil.GetItemTplDic()[rd];
                 go.name = string.Format("item-{0}-{1}", info.ID, info.Name);
                 item.GetComponent<BuyItemScript>().ResetItem(info);
-
-            }else if (WeaponOrItem == 0)
+                GameManager.Instance.gameData.ShopItemID[i] = rd;
+                GameManager.Instance.gameData.ShopItemType[i] = 1;
+                GameManager.Instance.gameData.ShopLock[i] = false;
+            }
+            else if (WeaponOrItem == 0)
             {
                 // 武器
                 List<int> weaponList = TplUtil.GetWeaponTplDic().Values
@@ -151,6 +180,9 @@ public class ShopPanel : MonoBehaviour
                 WeaponTplInfo info = TplUtil.GetWeaponTplDic()[rd];
                 go.name = string.Format("weapon-{0}-{1}", info.ID, info.Name);
                 item.GetComponent<BuyItemScript>().ResetWeapon(info);
+                GameManager.Instance.gameData.ShopItemID[i] = rd;
+                GameManager.Instance.gameData.ShopItemType[i] = 0;
+                GameManager.Instance.gameData.ShopLock[i] = false;
             }
             item.SetActive(true);// 确保刷新出来
         }

@@ -20,6 +20,7 @@ public class BuyItemScript : MonoBehaviour
     public bool isLock = false;         // 锁定检测
     public bool isItem = true;          // 判断物品类型
     public int ID;                      // 物品编号
+    public int Index;
 
     private void Start()
     {
@@ -42,6 +43,10 @@ public class BuyItemScript : MonoBehaviour
                     return;
                 }
             }
+            isLock = false;
+            LockImage.gameObject.SetActive(isLock);
+            GameManager.Instance.gameData.ShopLock[Index] = isLock;
+            LockText.text = "锁定";
             gameObject.SetActive(false);
         });
 
@@ -49,15 +54,14 @@ public class BuyItemScript : MonoBehaviour
         {
             isLock = !isLock;
             LockImage.gameObject.SetActive(isLock);
-            if (isLock)
-            {
-                LockText.text = "解锁";
-            }
-            else
-            {
-                LockText.text = "锁定";
-            }
+            GameManager.Instance.gameData.ShopLock[Index] = isLock;
+            LockText.text = isLock ? "解锁" : "锁定";
         });
+    }
+
+    public void SetIndex(int idx)
+    {
+        Index = idx;
     }
 
     public void ResetItem(ItemTplInfo item)
@@ -71,6 +75,7 @@ public class BuyItemScript : MonoBehaviour
         ItemGold.text = item.Price.ToString();
         ItemIcon.sprite = AssetManager.Instance.itemSprite[item.Index];
         isItem = true;
+        gameObject.SetActive(true);
     }
 
     public void ResetWeapon(WeaponTplInfo item)
@@ -84,6 +89,7 @@ public class BuyItemScript : MonoBehaviour
         ItemGold.text = item.Price.ToString();
         ItemIcon.sprite = AssetManager.Instance.WeaponForShowSprite[item.Index];
         isItem = false;
+        gameObject.SetActive(true);
     }
 
 }
