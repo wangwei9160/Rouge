@@ -116,6 +116,12 @@ public class GameManager : ManagerBase<GameManager>
         }
     }
 
+    public void OnGetFreeCnt(int cnt)
+    {
+        gameData.freeTime += cnt;
+        EventCenter.Broadcast(EventDefine.OnGetFree);
+    }
+
     public void OnMoneyChange(int money_)
     {
         if(money_ < 0)
@@ -138,7 +144,7 @@ public class GameManager : ManagerBase<GameManager>
         EventCenter.Broadcast(EventDefine.RefreshPlayerAttribute);
     }
 
-    private bool TryPayMoney(int money_)
+    public bool TryPayMoney(int money_)
     {
         if(gameData.money < money_)
         {

@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BaseEnemy : MonoBehaviour
@@ -40,7 +42,21 @@ public class BaseEnemy : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
+    private void Awake()
+    {
+        EventCenter.AddListener(EventDefine.GameOver , GameOver);
+    }
+
+    private void OnDestroy()
+    {
+        EventCenter.RemoveListener(EventDefine.GameOver, GameOver);
+    }
+
+    public void GameOver()
+    {
+        Destroy(gameObject);
+    }
+
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -92,7 +108,7 @@ public class BaseEnemy : MonoBehaviour
 
     public bool ChangeAnimation(string animation, float crossfade = 0.2f)
     {
-        if(currentAnimation == "Idle")
+        if(currentAnimation == "Death")
         {
             return false;
         }
@@ -103,6 +119,20 @@ public class BaseEnemy : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    public IEnumerator AttackFunc()
+    {
+        yield return new WaitForSeconds(1.0f);
+        DamageInfo info = new DamageInfo(0, attr.¹¥»÷Á¦, 0, 100f);
+        foreach (var buff in GameManager.Instance.gameData.playerBuffList.buffs)
+        {
+            buff.OnBeforeHurt(ref info);
+        }
+        GameManager.Instance.OnHpChange((int)info.Value);
+        DamageUIManager.Instance.ShowDamgeText(player.transform, info);
+        yield return new WaitForSeconds(0.5f);
+        ChangeAnimation("Idle");
     }
 
 }

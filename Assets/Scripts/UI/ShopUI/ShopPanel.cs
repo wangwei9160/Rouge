@@ -10,6 +10,7 @@ public class ShopPanel : MonoBehaviour
     // 商店按钮
     public Button GoButton;
     public Button RefeshButton;
+    public Text RefreshText;
     public Button BackBtn;
 
     // 奖励信息
@@ -35,29 +36,33 @@ public class ShopPanel : MonoBehaviour
         }
     }
 
+    private void Awake()
+    {
+        EventCenter.AddListener(EventDefine.RefreshWeapon, RefreshWeapon);
+        EventCenter.AddListener(EventDefine.RefreshItem, RefreshItem);
+        EventCenter.AddListener(EventDefine.ShowShopUI, RefreshAll);
+        EventCenter.AddListener(EventDefine.OnGetFree, RefreshButtonUI);
+    }
+
+    private void OnDestroy()
+    {
+        EventCenter.RemoveListener(EventDefine.RefreshWeapon, RefreshWeapon);
+        EventCenter.RemoveListener(EventDefine.RefreshItem, RefreshItem);
+        EventCenter.RemoveListener(EventDefine.ShowShopUI, RefreshAll);
+        EventCenter.RemoveListener(EventDefine.OnGetFree, RefreshButtonUI);
+    }
+
     void Start()
     {
         GoButton.onClick.AddListener(nextWave);
         RefeshButton.onClick.AddListener(RefreshAll);
+        RefreshButtonUI();
         BackBtn.onClick.AddListener(() =>
         {
             GameManager.Instance.SaveGameData(GameManager.Instance.gameData.SaveIndex);
             SceneManager.LoadScene("MainScene");
             GameManager.Instance.gameData = new GameData();
         });
-    }
-
-    private void OnEnable()
-    {
-        EventCenter.AddListener(EventDefine.RefreshWeapon, RefreshWeapon);
-        EventCenter.AddListener(EventDefine.RefreshItem, RefreshItem);
-        RefreshAll();
-    }
-
-    private void OnDisable()
-    {
-        EventCenter.RemoveListener(EventDefine.RefreshWeapon, RefreshWeapon);
-        EventCenter.RemoveListener(EventDefine.RefreshItem, RefreshItem);
     }
 
     // 下一关
@@ -69,8 +74,31 @@ public class ShopPanel : MonoBehaviour
         EventCenter.Broadcast(EventDefine.HideShopUI);
     }
 
+    public void RefreshButtonUI()
+    {
+        RefreshText.text = GameManager.Instance.gameData.freeTime > 0 ? "免费" : string.Format("刷新 -{0}",GameManager.Instance.gameData.refreshCnt);
+    }
+
     public void RefreshAll()
     {
+        int need = GameManager.Instance.gameData.freeTime > 0 ? 0 : GameManager.Instance.gameData.refreshCnt;
+        if (GameManager.Instance.TryPayMoney(need))
+        {
+            GameManager.Instance.OnMoneyChange(-1 * need);
+            if(need == 0)
+            {
+                GameManager.Instance.gameData.freeTime -= 1;
+            }else
+            {
+                GameManager.Instance.gameData.refreshCnt++;
+            }
+        }
+        else
+        {
+            EventCenter.Broadcast(EventDefine.ShowNoticeInfoUI , "金币不足");
+            return;
+        }
+        RefreshButtonUI();
         RefreshAllShopItem();
         RefreshPlayerAttribute();
         RefreshBagSlot();

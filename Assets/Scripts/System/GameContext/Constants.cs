@@ -31,15 +31,13 @@ public class Constants
     {
         // Base, Common, Rare, Epic, legendary
         new LevelProbability(1 , new float[]{100f , 0f , 0f , 0f , 0f}),
-        new LevelProbability(2 , new float[]{98f , 2f , 0f , 0f , 0f}),
-        new LevelProbability(3 , new float[]{90f , 9f , 1f , 0f , 0f}),
-        new LevelProbability(5 , new float[]{85f , 13f , 2f , 0f , 0f}),
-        new LevelProbability(7 , new float[]{80f , 15f , 5f , 0f , 0f}),
-        new LevelProbability(9 , new float[]{70f , 20f , 10f , 0f , 0f}),
-        new LevelProbability(12 , new float[]{59f , 30f , 10f , 1f , 0f}),
-        new LevelProbability(15 , new float[]{45f , 35f , 16f , 4f , 0f}),
-        new LevelProbability(20 , new float[]{25f , 40f , 27f , 7f , 1f}),
-        new LevelProbability(21 , new float[]{10f , 25f , 35f , 20f , 10f}),
+        new LevelProbability(2 , new float[]{90f , 9f , 1f , 0f , 0f}),
+        new LevelProbability(3 , new float[]{80f , 15f , 5f , 0f , 0f}),
+        new LevelProbability(4 , new float[]{70f , 20f , 10f , 0f , 0f}),
+        new LevelProbability(5 , new float[]{59f , 30f , 10f , 1f , 0f}),
+        new LevelProbability(6 , new float[]{45f , 35f , 16f , 4f , 0f}),
+        new LevelProbability(7 , new float[]{25f , 40f , 27f , 7f , 1f}),
+        new LevelProbability(8 , new float[]{10f , 25f , 35f , 20f , 10f}),
     };
 
     public static float[] GetRankTypeProbabilityByLevel(int level)

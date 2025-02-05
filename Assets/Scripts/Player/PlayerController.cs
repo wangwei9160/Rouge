@@ -9,11 +9,20 @@ public class PlayerController : MonoBehaviour
     public bool isInit = false;
 
     private float mCurrentSecond = 0;
+    //private void Awake()
+    //{
+    //    EventCenter.AddListener(EventDefine.GameOver, GameOver);
+    //}
 
-    void Start()
-    {
-        
-    }
+    //private void OnDestroy()
+    //{
+    //    EventCenter.RemoveListener(EventDefine.GameOver, GameOver);
+    //}
+
+    //public void GameOver()
+    //{
+    //    Destroy(gameObject);
+    //}
 
     void Update()
     {

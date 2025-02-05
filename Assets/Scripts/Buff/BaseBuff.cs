@@ -43,12 +43,12 @@ public class BaseBuff
         Debug.Log("OnWaveEnd " + Info.Name);
     }
 
-    public virtual void OnBeforeDamage(ref int damage)
+    public virtual void OnBeforeDamage(ref DamageInfo damage)
     {
         Debug.Log("OnBeforeDamage " + Info.Name);
     }
 
-    public virtual void OnBeforeHurt(ref int damage)
+    public virtual void OnBeforeHurt(ref DamageInfo damage)
     {
         Debug.Log("OnBeforeHurt " + Info.Name);
     }

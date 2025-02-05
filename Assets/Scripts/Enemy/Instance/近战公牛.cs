@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
 
 public class 近战公牛 : BaseEnemy 
@@ -66,18 +63,6 @@ public class 近战公牛 : BaseEnemy
         //curHp -= 1f * Time.deltaTime;
     }
 
-    IEnumerator AttackFunc()
-    {
-        yield return new WaitForSeconds(1.0f);
-        int damage = (int)attr.攻击力;
-        foreach (var buff in GameManager.Instance.gameData.playerBuffList.buffs)
-        {
-            buff.OnBeforeHurt(ref damage);
-        }
-        GameManager.Instance.OnHpChange(damage);
-        DamageUIManager.Instance.ShowDamgeText(player.transform, damage);
-        yield return new WaitForSeconds(0.5f);
-        ChangeAnimation("Idle");
-    }
+    
 
 }

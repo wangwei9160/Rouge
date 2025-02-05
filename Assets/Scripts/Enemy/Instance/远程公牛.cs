@@ -54,7 +54,10 @@ public class Ô¶³Ì¹«Å£ : BaseEnemy
         else if (Status == 2)
         {
             // ¹¥»÷
-            ChangeAnimation("Attack_01");
+            if (ChangeAnimation("Attack_01"))
+            {
+                StartCoroutine(AttackFunc());
+            }
 
         }
         //curHp -= 1f * Time.deltaTime;

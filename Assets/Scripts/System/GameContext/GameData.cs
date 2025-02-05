@@ -21,6 +21,9 @@ public class GameData
     public int[] ShopItemID;                // 商店刷新物品id
     public int[] ShopItemType;              // 商店刷新物品type
 
+    public int freeTime = 0;                // 免费刷新次数
+    public int refreshCnt = 1;              // 刷新次数
+
     private Dictionary<int, int> ItemMap;
 
     public int curLevel = 1;                // 当前等级

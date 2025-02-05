@@ -10,6 +10,11 @@ public class RandomUtil
         return Random.Range(mi, mx);
     }
 
+    public static bool IsProbabilityMet(float probability)
+    {
+        return RandomFloat(1.0f , false) <= probability;
+    }
+
     public static float RandomFloat(float range , bool neg = true)
     {
         if(neg) return RandomFloat(-range, range);

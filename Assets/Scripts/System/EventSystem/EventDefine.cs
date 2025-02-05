@@ -28,6 +28,9 @@ public enum EventDefine
     RefreshDamageByID,
 
     // 怪物死亡
-    OneEnemyDeath
+    OneEnemyDeath,
 
+
+    // 获得道具效果
+    OnGetFree       // 获得免费刷新次数
 }

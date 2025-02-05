@@ -32,17 +32,18 @@ public class BallController : Ö±Ïß·ÉÐÐ
         if (other.gameObject.CompareTag("Enemy") && isAlive)
         {
             //bool ok = other.gameObject.GetComponent<MonsterController>().Damge(damage);
-            int Damage = (int)damage;
+            PlayerAttribute attr = GameManager.Instance.gameData.playerAttr;
+            DamageInfo info = new DamageInfo(damage ,attr.attackPower , attr.CriticalHitRate , attr.CriticalDamage );
             foreach (var buff in GameManager.Instance.gameData.playerBuffList.buffs)
             {
-                buff.OnBeforeDamage(ref Damage);
+                buff.OnBeforeDamage(ref info);
             }
-            bool ok = other.gameObject.GetComponent<BaseEnemy>().Damage(Damage);
+            bool ok = other.gameObject.GetComponent<BaseEnemy>().Damage(info.Value);
             if (!ok) return;
             isAlive = false;
             Destroy(gameObject);
-            DamageUIManager.Instance.ShowDamgeText(other.gameObject.transform, Damage);
-            EventCenter.Broadcast(EventDefine.RefreshDamageByID , ID , Damage);
+            DamageUIManager.Instance.ShowDamgeText(other.gameObject.transform, info);
+            EventCenter.Broadcast(EventDefine.RefreshDamageByID , ID , (int)info.Value);
         }
     }
 

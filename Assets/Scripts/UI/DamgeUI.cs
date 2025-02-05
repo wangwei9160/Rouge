@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DamgeUI : MonoBehaviour 
 {
@@ -13,12 +14,9 @@ public class DamgeUI : MonoBehaviour
 
 
     public TMP_Text damageUI;
+    public GameObject critical;
 
     private Color curColor;
-
-    void Awake()
-    {
-    }
 
     void Start()
     {
@@ -45,6 +43,13 @@ public class DamgeUI : MonoBehaviour
     public void SetInfo(DamageData _data)
     {
         gameObject.transform.position = new Vector3(_data.pos.position.x, 2f, _data.pos.position.z);
-        damageUI.text = _data.Damage.ToString();
+        if(_data.Damage.isCritical)
+        {
+            Debug.Log("±©»÷ÁË" + ((int)_data.Damage.Value).ToString());
+            critical.SetActive(true);
+            damageUI.color = new Color(1f,0f,0f);
+            curColor = damageUI.color;
+        }
+        damageUI.text = ((int)_data.Damage.Value).ToString();
     }
 }

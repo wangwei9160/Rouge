@@ -9,6 +9,7 @@ public class 超级会员 : BaseItem
     public override void OnGet()
     {
         base.OnGet();
+        GameManager.Instance.OnGetFreeCnt(3);
     }
 
     public override void OnDiscard()

@@ -5,11 +5,11 @@ using UnityEngine;
 public class PlayerAttribute
 {
     public float maxHp = 100;           // 生命上限
-    public float attackPower = 10;      // 攻击力
+    public float attackPower = 5;      // 攻击力
     public float attackSpeed = 100;     // 攻速
     public float defend = 5;            // 防御
     public float magicDefend = 5;       // 法术抗性
-    public float CriticalHitRate = 10;  // 暴击率
+    public float CriticalHitRate = 5;  // 暴击率
     public float CriticalDamage = 150;  // 暴击伤害
     public float luck = 5;              // 幸运值
     public int Revenues = 50;           // 回合收入
@@ -17,11 +17,11 @@ public class PlayerAttribute
     public PlayerAttribute()
     {
         maxHp = 100;
-        attackPower = 10;
+        attackPower = 5;
         attackSpeed = 100;
         defend = 5;
         magicDefend = 5;
-        CriticalHitRate= 10;
+        CriticalHitRate= 5;
         CriticalDamage = 150;
         luck = 5;
         Revenues = 50;

@@ -13,10 +13,10 @@
     "ID": 2,
     "Name": "远程公牛",
     "Description": "远程敌人",
-    "Hp": 20,
+    "Hp": 100,
     "Attack": 20,
     "Defend": 0,
-    "Speed": 50,
+    "Speed": 80,
     "Exp": 15
   }
 ]

@@ -25,7 +25,7 @@ public class DamageCountUI : MonoBehaviour
             gameObject.SetActive(false);
         });
         Clear();
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
     }
 
     private void Update()

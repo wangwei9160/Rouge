@@ -7,19 +7,19 @@ using UnityEngine;
 public class DamageData
 {
 
-    public int Damage { get; private set; }
+    public DamageInfo Damage { get; private set; }
 
     public Transform pos;
 
-    public DamageData(int damage , Transform trans)
+    public DamageData(DamageInfo damage , Transform trans)
     {
         Damage = damage;
         pos = trans;
     }
 
-    public void SetDamageValue(int value)
+    public void SetDamageValue(DamageInfo damage)
     {
-        Damage = value;
+        Damage = damage;
     }
 }
 
@@ -53,11 +53,11 @@ public class DamageUIManager : Singleton<DamageUIManager>
     }
 
     // 提供给外部用于创建一个伤害显示的接口
-    public void ShowDamgeText(Transform pos , int damageValue )
+    public void ShowDamgeText(Transform pos , DamageInfo info )
     {
         ShowDamageAction tmp = new ShowDamageAction();
         tmp.action = CreateDamageText;
-        tmp.data = new DamageData(damageValue, pos);
+        tmp.data = new DamageData(info, pos);
         dataQueue.Enqueue(tmp);
     }
 

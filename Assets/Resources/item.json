@@ -5,7 +5,7 @@
     "Rank": 0,
     "Description": "获得<color=\"#38b48b\">5</color>点<color=\"#20C320\"></color>最大生命值",
     "Price": 40,
-    "Index" : 0,
+    "Index": 0,
     "MaxOwnCount": 0
   },
   {
@@ -14,7 +14,7 @@
     "Rank": 0,
     "Description": "获得<color=\"#00a497\">10</color>点<color=\"#20C320\"></color>最大生命值",
     "Price": 50,
-    "Index" : 1,
+    "Index": 1,
     "MaxOwnCount": 0
   },
   {
@@ -23,34 +23,34 @@
     "Rank": 0,
     "Description": "战斗中每秒获得<color=\"#e6b422\">1</color>枚<color=\"#C36220\"></color>金币",
     "Price": 50,
-    "Index" : 2,
+    "Index": 2,
     "MaxOwnCount": 0
   },
   {
     "ID": 4,
     "Name": "普通会员",
     "Rank": 1,
-    "Description": "获得<color=\"#0E9A0E\">普通会员</color>身份",
-    "Price": 50,
-    "Index" : 3,
+    "Description": "立即获得<color=\"#0E9A0E\">1</color>次免费刷新",
+    "Price": 5,
+    "Index": 3,
     "MaxOwnCount": 0
   },
   {
     "ID": 5,
     "Name": "中级会员",
     "Rank": 2,
-    "Description": "获得获得<color=\"#335CD9\">中级会员</color>身份",
-    "Price": 100,
-    "Index" : 3,
+    "Description": "立即获得<color=\"#335CFF\">2</color>次免费刷新",
+    "Price": 15,
+    "Index": 3,
     "MaxOwnCount": 0
   },
   {
     "ID": 6,
     "Name": "高级会员",
     "Rank": 3,
-    "Description": "获得获得<color=\"#C320A3\">高级会员</color>身份",
-    "Price": 200,
-    "Index" : 3,
+    "Description": "立即获得<color=\"#C320A3\">3</color>次免费刷新",
+    "Price": 30,
+    "Index": 3,
     "MaxOwnCount": 0
   },
   {
@@ -59,23 +59,25 @@
     "Rank": 4,
     "Description": "获得获得<color=\"#C37C20\">超级会员</color>身份",
     "Price": 500,
-    "Index" : 3,
+    "Index": 3,
     "MaxOwnCount": 0
-  },{
+  },
+  {
     "ID": 8,
     "Name": "力量读物",
     "Rank": 1,
     "Description": "获得获得<color=\"#000000\">1</color>点<color=\"#000000\">力量</color>",
-    "Price": 10,
-    "Index" : 4,
+    "Price": 40,
+    "Index": 4,
     "MaxOwnCount": 0
-  },{
+  },
+  {
     "ID": 9,
     "Name": "暴击读物",
     "Rank": 2,
     "Description": "获得获得<color=\"#FF0000\">10%</color>的<color=\"#FF0000\">暴击率</color>",
     "Price": 50,
-    "Index" : 4,
+    "Index": 4,
     "MaxOwnCount": 0
   }
 ]

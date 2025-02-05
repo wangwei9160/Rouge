@@ -9,6 +9,7 @@ public class 中级会员 : BaseItem
     public override void OnGet()
     {
         base.OnGet();
+        GameManager.Instance.OnGetFreeCnt(2);
     }
 
     public override void OnDiscard()
