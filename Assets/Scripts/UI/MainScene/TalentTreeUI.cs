@@ -10,22 +10,30 @@ public class TalentTreeUI : MonoBehaviour
     public Button SubTalentBtn;
     public Button[] Buttons;
     public Text TalentNumber;
+    public int INDEX;
+    public Button button;
 
     public void Awake()
     {
+        EventCenter.AddListener<int>(EventDefine.ShowPanelByIDInSelectPannel , Show);
         EventCenter.AddListener<int>(EventDefine.UpTalentByID, UpTalent);
         EventCenter.AddListener(EventDefine.ShowSelectUI, Refresh);
     }
 
     public void OnDestroy()
     {
+        EventCenter.RemoveListener<int>(EventDefine.ShowPanelByIDInSelectPannel, Show);
         EventCenter.RemoveListener<int>(EventDefine.UpTalentByID, UpTalent);
         EventCenter.RemoveListener(EventDefine.ShowSelectUI, Refresh);
     }
 
     private void Start()
     {
-        
+        INDEX = 1;
+        button.onClick.AddListener(() =>
+        {
+            EventCenter.Broadcast(EventDefine.ShowPanelByIDInSelectPannel , INDEX);
+        });
         AddTalentBtn.onClick.AddListener(() =>
         {
             TalentNumberOnChange(1);
@@ -35,6 +43,22 @@ public class TalentTreeUI : MonoBehaviour
             TalentNumberOnChange(-1);
         });
         RefreshTalentBtn.onClick.AddListener(ClearAllTalent);
+        gameObject.SetActive(false);
+    }
+
+    public void Show(int idx)
+    {
+        if(INDEX == idx)
+        {
+            Color color = new Color(1f , 0.16f,0f);
+            button.GetComponent<Image>().color = color;
+            gameObject.SetActive(true);
+        }else
+        {
+            Color color = new Color(1f,1f,1f);
+            button.GetComponent<Image>().color = color;
+            gameObject.SetActive(false);
+        }
     }
 
     public void Refresh()

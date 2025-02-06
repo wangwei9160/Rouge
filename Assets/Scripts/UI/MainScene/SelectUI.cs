@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Runtime.ConstrainedExecution;
 
 public class SelectUI : MonoBehaviour 
 {
@@ -39,9 +40,6 @@ public class SelectUI : MonoBehaviour
                 EventCenter.Broadcast(EventDefine.ShowNoticeInfoUI, "«Îœ»—°‘Ò≥ı ºŒ‰∆˜");
                 return;
             }
-
-            
-
             EventCenter.Broadcast<int>(EventDefine.ShowDataFileUI, 0);
             //EventCenter.Broadcast(EventDefine.StartGame);
             //SceneManager.LoadScene("BattleScene");
@@ -65,6 +63,7 @@ public class SelectUI : MonoBehaviour
         gameObject.SetActive(true);
         GameManager.Instance.gameData = new GameData();
         RefreshWeapon();
+        EventCenter.Broadcast(EventDefine.ShowPanelByIDInSelectPannel, 0);
     }
     private void Hide()
     {

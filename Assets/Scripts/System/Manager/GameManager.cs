@@ -312,7 +312,7 @@ public class GameManager : ManagerBase<GameManager>
     {
         string js = PlayerPrefs.GetString(Constants.TALENTPLAYERPREFS);
         TalentData talentData = JsonUtility.FromJson<TalentData>(js);
-        talentData.Total = math.min(math.max(talentData.Total + number, 0) , talentData.MaxNumber);
+        talentData.Total = math.max(talentData.Total + number, 0);
         string json = JsonUtility.ToJson(talentData);
         //Debug.Log(json);
         PlayerPrefs.SetString(Constants.TALENTPLAYERPREFS, json);

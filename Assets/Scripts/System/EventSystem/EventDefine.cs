@@ -16,6 +16,9 @@ public enum EventDefine
     HideShopUI,
     ShowNoticeInfoUI,   // 提示信息
 
+    // 带参数的显示
+    ShowPanelByIDInSelectPannel,
+
     // 刷新界面
     RefreshWeapon,
     RefreshItem,
